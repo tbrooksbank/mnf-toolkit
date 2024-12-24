@@ -137,6 +137,7 @@
                                                             (* 0.1 (:recent-goal-score merged-stats))))))))
          (sort-by :games-played >))))
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn generate-team-combinations
   "Generate all possible combinations of two 8-person teams from 16 players.
    Returns a sequence of maps, each containing :team1 and :team2"
@@ -210,6 +211,7 @@
     ;; Optional: cap extreme values
     (max 0.5 (min 1.5 balance-score))))
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn analyze-team-combinations
   "Analyze all combinations and return top 100 most balanced teams"
   [teams player-stats]

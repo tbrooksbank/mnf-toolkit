@@ -4,11 +4,11 @@
  {:app-dev {:target :browser
             :output-dir "docs/js"
             :asset-path "/js"
-            :modules {:main {:init-fn mnf.frontend.site/innit!}}
-            :compiler-options {:closure-defines {mnf.frontend.site/BASE-PATH ""}}}
+            :modules {:main {:init-fn mnf-toolkit.frontend.site/innit!}}
+            :compiler-options {:closure-defines {mnf-toolkit.frontend.site/BASE-PATH ""}}}
   
   :app-prod {:target :browser
              :output-dir "docs/js"
              :asset-path "/mnf-toolkit/js"
-             :modules {:main {:init-fn mnf.frontend.site/innit!}}
-             :compiler-options {:closure-defines {mnf.frontend.site/BASE-PATH "/mnf-toolkit"}}}}}
+             :modules {:main {:init-fn mnf-toolkit.frontend.site/innit!}}
+             :compiler-options {:closure-defines {mnf-toolkit.frontend.site/BASE-PATH "/mnf-toolkit"}}}}}

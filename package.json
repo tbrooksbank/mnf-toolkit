@@ -1,0 +1,30 @@
+{
+  "name": "mnf-toolkit",
+  "version": "1.0.0",
+  "description": "A toolkit for tracking stats, managing squad rotations, and visualizing performance metrics for Maidenhead Monday Night Football.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbrooksbank/mnf-toolkit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tbrooksbank/mnf-toolkit/issues"
+  },
+  "homepage": "https://github.com/tbrooksbank/mnf-toolkit#readme",
+  "devDependencies": {
+    "shadow-cljs": "^2.28.20"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

@@ -1,4 +1,5 @@
 (ns mnf-toolkit.frontend.site
+  #_{:clj-kondo/ignore [:unused-namespace]}
   (:require [reagent.core :as r]
             [reagent.dom.client :as rdom]
             [cljs.reader :as reader]
