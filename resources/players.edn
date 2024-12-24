@@ -1,0 +1,117 @@
+[{:name "Rick Miles"
+  :defensive-bias 0.4
+  :attacking-bias 0.6
+  :manager-rating 0.5}
+ {:name "Christian"
+  :defensive-bias 0.6
+  :attacking-bias 0.4
+  :manager-rating 0.6}
+ {:name "Chris"
+  :defensive-bias 0.4
+  :attacking-bias 0.6
+  :manager-rating 0.7}
+ {:name "Catalin Dominte"
+  :defensive-bias 0.7
+  :attacking-bias 0.3
+  :manager-rating 0.5}
+ {:name "Sam"
+  :defensive-bias 0.5
+  :attacking-bias 0.5
+  :manager-rating 0.7}
+ {:name "Andre"
+  :defensive-bias 0.1
+  :attacking-bias 0.9
+  :manager-rating 0.5}
+ {:name "Gary"
+  :defensive-bias 0.7
+  :attacking-bias 0.3
+  :manager-rating 0.5}
+ {:name "Edd Cowley"
+  :defensive-bias 0.5
+  :attacking-bias 0.5
+  :manager-rating 0.7}
+ {:name "Simon Wardell"
+  :defensive-bias 0.2
+  :attacking-bias 0.8
+  :manager-rating 0.4}
+ {:name "Steve Rowland"
+  :defensive-bias 0.8
+  :attacking-bias 0.2
+  :manager-rating 0.5}
+ {:name "Tom Brooksbank"
+  :defensive-bias 0.2
+  :attacking-bias 0.8
+  :manager-rating 0.6}
+ {:name "Jonny"
+  :attacking-bias 0.4
+  :defensive-bias 0.6
+  :manager-rating 0.6}
+ {:name "Mark Gawthrop"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.4}
+ {:name "Richard Brown"
+  :attacking-bias 0.6
+  :defensive-bias 0.4
+  :manager-rating 0.6}
+ {:name "Mark Burnage"
+  :attacking-bias 0.95
+  :defensive-bias 0.05
+  :manager-rating 0.3}
+ {:name "Zam"
+  :attacking-bias 0.9
+  :defensive-bias 0.1
+  :manager-rating 0.6}
+ {:name "Kadir"
+  :attacking-bias 0.2
+  :defensive-bias 0.8
+  :manager-rating 0.3}
+ {:name "Dave Vann"
+  :attacking-bias 0.6
+  :defensive-bias 0.4
+  :manager-rating 0.5}
+ {:name "Tom Searle"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.7}
+ {:name "Berk"
+  :attacking-bias 0.1
+  :defensive-bias 0.9
+  :manager-rating 0.7}
+ {:name "Saffet"
+  :attacking-bias 0.3
+  :defensive-bias 0.7
+  :manager-rating 0.4}
+ {:name "Gordon"
+  :attacking-bias 0.4
+  :defensive-bias 0.6
+  :manager-rating 0.5}
+ {:name "Ian Daley"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.5}
+ {:name "Adam Turnbull"
+  :attacking-bias 0.3
+  :defensive-bias 0.7
+  :manager-rating 0.4}
+ {:name "Tim"
+  :attacking-bias 0.8
+  :defensive-bias 0.2
+  :manager-rating 0.5}
+ {:name "Stace"
+  :attacking-bias 0.9
+  :defensive-bias 0.1
+  :manager-rating 0.6}
+ {:name "John Henry Prate"
+  :attacking-bias 0.2
+  :defensive-bias 0.8
+  :manager-rating 0.5}
+ {:name "Callum Watson"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.5}
+ {:name "Ryan Waters"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.5}]
+

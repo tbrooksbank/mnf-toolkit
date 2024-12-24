@@ -1,0 +1,88 @@
+[{:match-id 1
+  :date #inst "2024-11-24T00:00:00.000-00:00"
+  :team-colours-data {:goals 4
+                      :shooting-at-railway 1
+                      :players #{"Tom Brooksbank"
+                                 "Mark Gawthrop"
+                                 "Sam"
+                                 "Tim"
+                                 "Steve Rowland"
+                                 "Dave Vann"
+                                 "Rick Miles"
+                                 "Ian Daley"}}
+  :team-bibs-data {:goals 7
+                   :shooting-at-railway 0
+                   :players #{"Andre"
+                              "Christian"
+                              "Stace"
+                              "Simon Wardell"
+                              "Berk"
+                              "Kadir"
+                              "Saffet"
+                              "Ryan Waters"}}}
+ {:match-id 2
+  :date #inst "2024-12-02T00:00:00.000-00:00"
+  :team-colours-data {:goals 7
+                      :shooting-at-railway 1
+                      :players #{"Tom Brooksbank"
+                                 "Tom Searle"
+                                 "Rick Miles"
+                                 "Berk"
+                                 "Steve Rowland"
+                                 "Mark Gawthrop"
+                                 "Tim"
+                                 "Richard Brown"}}
+  :team-bibs-data {:goals 9
+                   :shooting-at-railway 0
+                   :players #{"Christian"
+                              "Jonny"
+                              "Saffet"
+                              "Simon Wardell"
+                              "Mark Burnage"
+                              "John Henry Prate"
+                              "Andre"
+                              "Catalin Dominte"}}}
+ {:match-id 3
+  :date #inst "2024-12-09T00:00:00.000-00:00"
+  :team-colours-data {:goals 8
+                      :shooting-at-railway 1
+                      :players #{"Tom Searle"
+                                 "Richard Brown"
+                                 "Saffet"
+                                 "Callum Watson"
+                                 "Andre"
+                                 "Ian Daley"
+                                 "John Henry Prate"
+                                 "Kadir"}}
+  :team-bibs-data {:goals 4
+                   :shooting-at-railway 0
+                   :players #{"Tom Brooksbank"
+                              "Berk"
+                              "Tim"
+                              "Steve Rowland"
+                              "Christian"
+                              "Jonny"
+                              "Stace"
+                              "Mark Burnage"}}}
+ {:match-id 4
+  :date #inst "2024-12-16T00:00:00.000-00:00"
+  :team-colours-data {:goals 5
+                      :shooting-at-railway 1
+                      :players #{"Jonny"
+                                 "Tom Searle"
+                                 "Andre"
+                                 "Tim"
+                                 "Mark Burnage"
+                                 "Steve Rowland"
+                                 "Stace"
+                                 "Ian Daley"}}
+  :team-bibs-data {:goals 4
+                   :shooting-at-railway 0
+                   :players #{"Tom Brooksbank"
+                              "Kadir"
+                              "Chris"
+                              "Berk"
+                              "Adam Turnbull"
+                              "Sam"
+                              "Richard Brown"
+                              "Saffet"}}}]
