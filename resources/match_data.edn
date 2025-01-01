@@ -85,4 +85,28 @@
                               "Adam Turnbull"
                               "Sam"
                               "Richard Brown"
-                              "Saffet"}}}]
+                              "Saffet"}}} 
+ {:match-id 5
+ :date #inst "2024-12-23T00:00:00.000-00:00"
+ :team-colours-data {:goals 9
+                     :shooting-at-railway 1
+                     :players #{"Richard Brown"
+                                "Jonny"
+                                "Andre"
+                                "Kadir"
+                                "Steve Rowland"
+                                "Ian Daley"
+                                ;; Stu (Ian's mate)
+                                ;; Adam (Ian's mate)
+                                }}
+ :team-bibs-data {:goals 8
+                  :shooting-at-railway 0
+                  :players #{"Tom Searle"
+                             "Chris"
+                             "Rick Miles"
+                             "Christian"
+                             "Adam Turnbull"
+                             "Mark Burnage"
+                             "Tim"
+                             ;; Andy (Christian's mate)
+                             }}}]
