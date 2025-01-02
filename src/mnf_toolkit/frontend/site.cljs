@@ -118,28 +118,31 @@
 (defn league-table-component []
   [:div.section
    [:h2 "League Table"]
+   [:p "Coming soon"]])
+
+(defn league-history-component []
+  [:div.section
+   [:h2 "All Time League Table"]
    (let [data (:league-table @app-state)]
      (if (nil? data)
        [:div "Loading league table..."]
        [data-table data :league]))])
 
-(defn player-info-component []
+(defn match-results []
+  [:div.section
+   [:h2 "Match Results"]
+   [:p "Coming soon"]])
+
+(defn player-info []
   [:div.section
    [:h2 "Player Info"]
-   (let [data (:player-info @app-state)]
-     (if (nil? data)
-       [:div "Loading player info..."]
-       [data-table data :player]))])
-
-(defn team-builder []
-  [:div.section
-   [:h2 "Team Builder"]
    [:p "Coming soon"]])
 
 (defn nav-link [id label active-tab]
   [:a.nav-link
    {:href (str "#" id)
-    :class (when (= active-tab id) "active")}
+    :class (when (= active-tab id) "active")
+    :on-click #(swap! nav-state assoc :menu-open? false)}  ; Close menu on click
    label])
 
 (defn navigation []
@@ -155,8 +158,9 @@
       [:div.nav-left
        [nav-link "team-sheet" "Team Sheet" active-tab]
        [nav-link "league-table" "League Table" active-tab]
-       [nav-link "player-info" "Player Info" active-tab]
-       [nav-link "team-builder" "Team Builder" active-tab]]]]))
+       [nav-link "all-time-league-table" "All Time League Table" active-tab]
+       [nav-link "match-results" "Match Results" active-tab]
+       [nav-link "players" "Player Info" active-tab]]]]))
 
 (defn main-content []
   (let [active-tab (:active-tab @app-state)]
@@ -164,8 +168,9 @@
      (case active-tab
        "team-sheet" [team-sheet]
        "league-table" [league-table-component]
-       "player-info" [player-info-component]
-       "team-builder" [team-builder]
+       "all-time-league-table" [league-history-component]
+       "match-results" [match-results]
+       "players" [player-info]
        [team-sheet])]))
 
 (defn app []
@@ -173,7 +178,12 @@
    [navigation]
    [main-content]
    [:footer.footer
-    "Tom Brooksbank © 2024"]])
+    [:a {:href "https://github.com/tbrooksbank/mnf-toolkit"
+         :target "_blank"
+         :rel "noopener noreferrer"}
+     "Source Code"]
+    [:span " | "]
+    [:span "Tom Brooksbank © 2025"]]])
 
 ;; Initialize app
 (defn init! []

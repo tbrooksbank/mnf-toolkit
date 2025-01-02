@@ -8,22 +8,6 @@ A toolkit for tracking stats, managing squad rotations, and visualizing performa
 - Team balancing suggestions
 - League table statistics
 
-## Development Setup
-
-1. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-```
-
-2. Start local development server:
-```bash
-clj -M:dev
-```
-
-This will start a local server at `http://localhost:3000`
-
 ## Updating Match Data
 
 1. Add new match data to [`resources/match_data.edn`](resources/match_data.edn):
@@ -52,9 +36,17 @@ This will start a local server at `http://localhost:3000`
 ```bash
 # Start shadow-cljs watch
 npx shadow-cljs watch app-dev
+```
 
-# In another terminal, start local server
+```clojure
+;; In another terminal, start local server
 clj -M:dev
+(require '[user])
+
+;; Start the server
+(def start-server (stop-server))
+;; Stop the server
+(stop-server)
 ```
 Visit `http://localhost:3000`
 
