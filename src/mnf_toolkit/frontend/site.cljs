@@ -1,7 +1,8 @@
 (ns mnf-toolkit.frontend.site
   #_{:clj-kondo/ignore [:unused-namespace]}
-  (:require [reagent.core :as r]
+  (:require [reagent.core :as r] 
             [reagent.dom.client :as rdom]
+            [clojure.string :as clojure.string]
             [cljs.reader :as reader]
             [goog.events :as events]))
 
@@ -13,6 +14,7 @@
 (def app-state
   (r/atom {:active-tab "team-sheet"
            :league-table nil
+           :match-data nil
            :player-info nil}))
 
 (def nav-state (r/atom {:menu-open? false}))
@@ -52,7 +54,8 @@
                     (println "Data loaded")
                     (swap! app-state assoc
                            :league-table (:league-table %)
-                           :player-info (:player-info %)))))
+                           :player-info (:player-info %)
+                           :match-data (:match-data %)))))
 
 ;; Components
 (defn format-value [v]
@@ -117,8 +120,8 @@
 
 (defn league-table-component []
   [:div.section
-   [:h2 "League Table"]
-   [:p "Coming soon"]])
+   [:h2 "2025 League Table"]
+   [:p "This years league table will be avalible after the first match on 6th January."]])
 
 (defn league-history-component []
   [:div.section
@@ -128,10 +131,64 @@
        [:div "Loading league table..."]
        [data-table data :league]))])
 
+;; Add data formatting functions
+(defn format-date [date-str]
+  (.toLocaleDateString (js/Date. date-str)))
+
+(defn format-match-row [match]
+  {:id (:match-id match)
+   :date (format-date (:date match))
+   :bibs-team "Team Bibs"
+   :bibs-score (get-in match [:team-bibs-data :goals])
+   :colours-score (get-in match [:team-colours-data :goals])
+   :colours-team "Team Colours"
+   :bibs-players (get-in match [:team-bibs-data :players])
+   :colours-players (get-in match [:team-colours-data :players])
+   :railway (get-in match [:team-bibs-data :railway])})
+
+;; Add match detail component
+(defn match-detail [{:keys [bibs-players colours-players railway]}]
+  [:div.match-detail
+   [:div.team-detail
+    [:h4 "Team Bibs"]
+    [:p (str "Players: " (clojure.string/join ", " bibs-players))]
+    [:p (str "Railway End: " (if railway "Yes" "No"))]]
+   [:div.team-detail
+    [:h4 "Team Colours"]
+    [:p (str "Players: " (clojure.string/join ", " colours-players))]
+    [:p (str "Railway End: " (if (not railway) "Yes" "No"))]]])
+
 (defn match-results []
-  [:div.section
-   [:h2 "Match Results"]
-   [:p "Coming soon"]])
+  (let [matches (:match-data @app-state)
+        expanded-id (:expanded-match @app-state)]
+    [:div.section
+     [:h2 "Match Results"]
+     [:table.data-table
+      [:thead
+       [:tr
+        [:th "Date"]
+        [:th "Team"]
+        [:th "Score"]
+        [:th ""]
+        [:th "Score"]
+        [:th "Team"]]]
+      [:tbody
+       (for [match (map format-match-row matches)]
+         ^{:key (:id match)}
+         [:<>
+          [:tr.clickable
+           {:on-click #(swap! app-state update :expanded-match
+                             (fn [curr] (if (= curr (:id match)) nil (:id match))))}
+           [:td (:date match)]
+           [:td (:bibs-team match)]
+           [:td (:bibs-score match)]
+           [:td "-"]
+           [:td (:colours-score match)]
+           [:td (:colours-team match)]]
+          (when (= expanded-id (:id match))
+            [:tr
+             [:td.match-detail-cell {:col-span 6}
+              [match-detail match]]])])]]]))
 
 (defn player-info []
   [:div.section

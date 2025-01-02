@@ -52,7 +52,8 @@
 
             consolidated-data {:raw-player-stats raw-player-stats
                                :league-table league-table
-                               :player-info player-info}]
+                               :player-info player-info
+                               :match-data (reverse match-data)}]
 
         (println "Storing processed data file to:"
                  "\n Data: docs/data/mnf-data.edn")

@@ -171,6 +171,7 @@ body {
 }
 
 .data-table td {
+    text-align: center;
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
@@ -190,6 +191,27 @@ body {
   
   .footer a:hover {
     text-decoration: underline;
+  }
+
+  .match-detail {
+    padding: 1rem;
+    background-color: var(--secondary-bg);
+  }
+  
+  .team-detail {
+    margin: 0.5rem 0;
+  }
+  
+  .match-detail-cell {
+    padding: 0 !important;
+  }
+  
+  tr.clickable {
+    cursor: pointer;
+  }
+  
+  tr.clickable:hover {
+    background-color: var(--hover-bg);
   }
 
 /* Mobile Responsiveness */
