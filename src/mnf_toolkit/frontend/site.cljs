@@ -14,6 +14,7 @@
 (def app-state
   (r/atom {:active-tab "team-sheet"
            :league-table nil
+           :current-league-table nil
            :match-data nil
            :player-info nil}))
 
@@ -54,6 +55,7 @@
                     (println "Data loaded")
                     (swap! app-state assoc
                            :league-table (:league-table %)
+                           :current-league-table (:current-year-table %)
                            :player-info (:player-info %)
                            :match-data (:match-data %)))))
 
@@ -121,7 +123,10 @@
 (defn league-table-component []
   [:div.section
    [:h2 "2025 League Table"]
-   [:p "This years league table will be avalible after the first match on 6th January."]])
+   (let [data (:current-league-table @app-state)]
+     (if (nil? data)
+       [:div "Loading league table..."]
+       [data-table data :league]))])
 
 (defn league-history-component []
   [:div.section

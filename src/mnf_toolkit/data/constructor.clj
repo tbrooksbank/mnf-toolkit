@@ -43,6 +43,12 @@
                            (catch Exception e
                              (println "Error: Failed to generate league table from player stats:" (.getMessage e))
                              (throw e)))
+            
+            current-year-league-table (try
+                                        (tables/current-year-league-table players match-data)
+                                        (catch Exception e
+                                          (println "Error: Failed to generate current year league table from player stats:" (.getMessage e))
+                                          (throw e)))
 
             player-info (try
                           (tables/player-info raw-player-stats)
@@ -52,6 +58,7 @@
 
             consolidated-data {:raw-player-stats raw-player-stats
                                :league-table league-table
+                               :current-year-table current-year-league-table
                                :player-info player-info
                                :match-data (reverse match-data)}]
 

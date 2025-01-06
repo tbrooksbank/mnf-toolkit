@@ -1,7 +1,6 @@
 (ns mnf-toolkit.data.output-tables
   (:require [mnf-toolkit.calcs :as calcs]))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn league-table [player-stats]
   (->> player-stats
        (map (fn [stat]
@@ -26,6 +25,19 @@
        (sort-by :gf >)
        (sort-by :gd >)
        (sort-by :points >)))
+
+(defn get-year-from-date [date]
+  (if (instance? java.util.Date date)
+    (+ 1900 (.getYear date))  ; Java Date years are 1900-based
+    (.getYear (java.time.LocalDateTime/parse
+               (str date)
+               java.time.format.DateTimeFormatter/ISO_DATE_TIME))))
+
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+(defn current-year-league-table [players matches]
+  (let [current-year-matches (filter #(= 2025 (get-year-from-date (:date %))) matches)
+        current-year-player-stats (calcs/calculate-player-stats current-year-matches players)]
+    (league-table current-year-player-stats)))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn player-info [player-stats]

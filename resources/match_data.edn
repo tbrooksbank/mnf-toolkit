@@ -13,7 +13,7 @@
   :team-bibs-data {:goals 7
                    :shooting-at-railway 0
                    :players #{"Andre"
-                              "Christian"
+                              "Christian Halstead"
                               "Stace"
                               "Simon Wardell"
                               "Berk"
@@ -34,7 +34,7 @@
                                  "Richard Brown"}}
   :team-bibs-data {:goals 9
                    :shooting-at-railway 0
-                   :players #{"Christian"
+                   :players #{"Christian Halstead"
                               "Jonny"
                               "Saffet"
                               "Simon Wardell"
@@ -60,7 +60,7 @@
                               "Berk"
                               "Tim"
                               "Steve Rowland"
-                              "Christian"
+                              "Christian Halstead"
                               "Jonny"
                               "Stace"
                               "Mark Burnage"}}}
@@ -104,9 +104,31 @@
                   :players #{"Tom Searle"
                              "Chris"
                              "Rick Miles"
-                             "Christian"
+                             "Christian Halstead"
                              "Adam Turnbull"
                              "Mark Burnage"
                              "Tim"
-                             ;; Andy (Christian's mate)
-                             }}}]
+                             "Andy Smith"
+                             }}}
+  {:match-id 6
+   :date #inst "2025-01-06T00:00:00.000-00:00"
+   :team-colours-data {:goals 7
+                       :shooting-at-railway 1
+                       :players #{"Andy Smith"
+                                  "Christian Halstead"
+                                  "Rick Miles"
+                                  "Stace"
+                                  "Steve Rowland"
+                                  "Mark Burnage"
+                                  "Chris"
+                                  "Richard Brown"}}
+   :team-bibs-data {:goals 5
+                    :shooting-at-railway 0
+                    :players #{"Tom Brooksbank"
+                               "Tom Searle"
+                               "Simon Wardell"
+                               "Berk"
+                               "Ian Daley"
+                               "Kadir"
+                               "Tim"
+                               "Catalin Dominte"}}}]

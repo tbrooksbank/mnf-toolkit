@@ -2,7 +2,7 @@
   :defensive-bias 0.4
   :attacking-bias 0.6
   :manager-rating 0.5}
- {:name "Christian"
+ {:name "Christian Halstead"
   :defensive-bias 0.6
   :attacking-bias 0.4
   :manager-rating 0.6}
@@ -113,5 +113,9 @@
  {:name "Ryan Waters"
   :attacking-bias 0.5
   :defensive-bias 0.5
-  :manager-rating 0.5}]
+  :manager-rating 0.5}
+ {:name "Andy Smith"
+  :attacking-bias 0.4
+  :defensive-bias 0.6
+  :manager-rating 0.6}]
 
