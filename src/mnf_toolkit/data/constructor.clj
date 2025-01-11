@@ -1,5 +1,6 @@
 (ns mnf-toolkit.data.constructor
   (:require [mnf-toolkit.calcs :as mnf]
+            [mnf-toolkit.data.access :as data-access]
             [mnf-toolkit.data.validation :as data-val]
             [mnf-toolkit.data.output-tables :as tables]))
 
@@ -14,12 +15,12 @@
              "\n Match data: ./resources/match_data.edn"
              "\n Player data: ./resources/players.edn")
     (let [match-data (try
-                       (mnf/load-data "./resources/match_data.edn")
+                       (data-access/load-data "./resources/match_data.edn")
                        (catch Exception e
                          (println "ERROR: Failed to load match data:" (.getMessage e))
                          (throw e)))
           players (try
-                    (mnf/load-data "./resources/players.edn")
+                    (data-access/load-data "./resources/players.edn")
                     (catch Exception e
                       (println "ERROR: Failed to load player data:" (.getMessage e))
                       (throw e)))]

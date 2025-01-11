@@ -120,6 +120,11 @@ body {
     margin-top: var(--nav-height);
     padding: var(--spacing-lg);
     min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+    display: flex;
+}
+
+.section {
+    width : 100%;
 }
 
 .footer {
@@ -184,6 +189,28 @@ body {
     background-color: #fafafa;
 }
 
+/* team sheet styles*/
+.team-sheet-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.team-sheet-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.team-sheet-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0.5rem;
+}
+
+/*footer styles*/
 .footer a {
     color: white;
     text-decoration: none;
@@ -256,5 +283,9 @@ body {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
+    }
+
+    .team-sheet-row {
+        flex-direction: column;
     }
 }

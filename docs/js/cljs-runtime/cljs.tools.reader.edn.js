@@ -23,8 +23,8 @@ cljs.tools.reader.edn.not_constituent_QMARK_ = (function cljs$tools$reader$edn$n
 return ((("@" === ch)) || (((("`" === ch)) || (("~" === ch)))));
 });
 cljs.tools.reader.edn.read_token = (function cljs$tools$reader$edn$read_token(var_args){
-var G__22371 = arguments.length;
-switch (G__22371) {
+var G__22380 = arguments.length;
+switch (G__22380) {
 case 3:
 return cljs.tools.reader.edn.read_token.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -70,10 +70,10 @@ return cljs.core.str.cljs$core$IFn$_invoke$arity$1(sb);
 if(cljs.tools.reader.edn.not_constituent_QMARK_(ch)){
 return cljs.tools.reader.impl.errors.throw_bad_char(rdr,kind,ch);
 } else {
-var G__22436 = (function (){var G__22380 = sb;
-G__22380.append(cljs.tools.reader.reader_types.read_char(rdr));
+var G__22436 = (function (){var G__22381 = sb;
+G__22381.append(cljs.tools.reader.reader_types.read_char(rdr));
 
-return G__22380;
+return G__22381;
 })();
 var G__22437 = cljs.tools.reader.reader_types.peek_char(rdr);
 sb = G__22436;
@@ -306,15 +306,15 @@ var G__22443 = (((!((mret === rdr))))?cljs.core.conj_BANG_.cljs$core$IFn$_invoke
 a = G__22443;
 continue;
 } else {
-var o = (function (){var G__22397 = (function (){var G__22401 = rdr;
-cljs.tools.reader.reader_types.unread(G__22401,ch);
+var o = (function (){var G__22401 = (function (){var G__22405 = rdr;
+cljs.tools.reader.reader_types.unread(G__22405,ch);
 
-return G__22401;
+return G__22405;
 })();
-var G__22398 = true;
-var G__22399 = null;
-var G__22400 = opts;
-return (cljs.tools.reader.edn.read.cljs$core$IFn$_invoke$arity$4 ? cljs.tools.reader.edn.read.cljs$core$IFn$_invoke$arity$4(G__22397,G__22398,G__22399,G__22400) : cljs.tools.reader.edn.read.call(null, G__22397,G__22398,G__22399,G__22400));
+var G__22402 = true;
+var G__22403 = null;
+var G__22404 = opts;
+return (cljs.tools.reader.edn.read.cljs$core$IFn$_invoke$arity$4 ? cljs.tools.reader.edn.read.cljs$core$IFn$_invoke$arity$4(G__22401,G__22402,G__22403,G__22404) : cljs.tools.reader.edn.read.call(null, G__22401,G__22402,G__22403,G__22404));
 })();
 var G__22444 = (((!((o === rdr))))?cljs.core.conj_BANG_.cljs$core$IFn$_invoke$arity$2(a,o):a);
 a = G__22444;

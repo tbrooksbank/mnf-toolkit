@@ -4,7 +4,10 @@
             [reagent.dom.client :as rdom]
             [clojure.string :as clojure.string]
             [cljs.reader :as reader]
-            [goog.events :as events]))
+            [cljs-http.client :as http]
+            [cljs.core.async :refer [<! go]]
+            [goog.events :as events]
+            [clojure.edn :as edn]))
 
 (goog-define BASE-PATH "")  ; This will be set by shadow-cljs based on environment
 
@@ -115,10 +118,93 @@
                    [:td (format-value (get row header))]))])))]]
         [:div "No data available"]))))
 
+;; Team Sheets - Sourced from google sheets
+(def sheet-id "1qWimpverGPBkExhEkStyoUYsejExo6iqMW6AdDV0Q_g")
+
+(defn clean-google-response [response]
+  (-> response
+      (clojure.string/replace "/*O_o*/\n" "")
+      (clojure.string/replace "google.visualization.Query.setResponse(" "")
+      (clojure.string/replace-first ");" "")))
+
+(defn parse-google-response [response]
+  (try
+    (let [cleaned-json (clean-google-response (:body response))
+          data (js->clj (js/JSON.parse cleaned-json) :keywordize-keys true)
+          rows (get-in data [:table :rows])
+          date-cell (get-in (second rows) [:c 3]) 
+          formatted-date (get date-cell :v)
+          teams-final-cell (get-in (last rows) [:c 3 :v])]
+      {:team1 (->> rows
+                   rest
+                   (map #(get-in % [:c 0 :v]))
+                   (filter identity))
+       :team2 (->> rows
+                   rest
+                   (map #(get-in % [:c 1 :v]))
+                   (filter identity))
+       :match-date formatted-date
+       :teams-finalised teams-final-cell})
+    (catch js/Error e
+      (js/console.error "Error during parsing:" e)
+      {:team1 [] :team2 [] :match-date nil})))
+
 (defn team-sheet []
-  [:div.section
-   [:h2 "Team Sheet"]
-   [:p "Coming soon"]])
+  (let [teams (r/atom {:team1 [] 
+                       :team2 []
+                       :match-date nil
+                       :teams-finalised nil})]
+    (r/create-class
+     {:component-did-mount
+      (fn []
+        (go
+          (let [url (str "https://docs.google.com/spreadsheets/d/"
+                         sheet-id
+                         "/gviz/tq?"
+                         "tqx=out:json"
+                         "&sheet=team-sheet"
+                         "&range=B1:E9"
+                         "&headers=0")
+                _ (js/console.log "Fetching team sheet data from:" url)
+                response (<! (http/get url {:with-credentials? false}))]
+            (try
+              (let [parsed-data (parse-google-response response)]
+                (reset! teams parsed-data))
+              (catch js/Error e
+                (js/console.error "Error parsing response:" e)))))) 
+      
+      :reagent-render
+      (fn [] 
+        [:div {:class "team-sheet-container"}
+         [:h2 (if-let [date (:match-date @teams)]
+                (str date " - Match Teams")
+                "Unspecified Match Date - Teams")] 
+         [:h3 (if (= (:teams-finalised @teams) "Yes")
+                "Teams Finalised"
+                "Teams Not Yet Decided, Check Back Later")]
+         [:div {:class "team-sheet-row"}
+          (for [team-info [{:id :team1 
+                            :name "Team 1" 
+                            :data (:team1 @teams)}
+                           {:id :team2 
+                            :name "Team 2" 
+                            :data (:team2 @teams)}]]
+            ^{:key (:id team-info)}
+            [:div {:class "team-sheet-column"}
+             [:h3 (:name team-info)]
+             [:ul {:style {:list-style-type "none"}}
+              (for [player (:data team-info)]
+                ^{:key player}
+                [:li.p-2 
+                 {:style {:background-color "#f5f5f5"
+                          :border-radius "5px"
+                          :box-shadow "0 2px 4px rgba(0,0,0,0.1)"
+                          :margin-bottom "10px"
+                          :padding "12px"
+                          :transition "all 0.1s ease-in-out"}
+                  :on-mouse-over #(-> % .-target .-style (.setProperty "background-color" "#e8e8e8"))
+                  :on-mouse-out #(-> % .-target .-style (.setProperty "background-color" "#f5f5f5"))}
+                 player])]])]])})))
 
 (defn league-table-component []
   [:div.section

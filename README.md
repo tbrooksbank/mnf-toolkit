@@ -26,6 +26,7 @@ A toolkit for tracking stats, managing squad rotations, and visualizing performa
 
 3. Rebuild the processed data:
 ```clojure
+clj
 (require '[mnf-toolkit.data.constructor :as constructor])
 (constructor/build-and-store-data!)
 ```
@@ -44,7 +45,7 @@ clj -M:dev
 (require '[user])
 
 ;; Start the server
-(def start-server (stop-server))
+(def stop-server (start-server))
 ;; Stop the server
 (stop-server)
 ```
