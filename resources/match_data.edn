@@ -131,4 +131,26 @@
                                "Ian Daley"
                                "Kadir"
                                "Tim"
-                               "Catalin Dominte"}}}]
+                               "Catalin Dominte"}}}
+{:match-id 7
+ :date #inst "2025-01-13T00:00:00.000-00:00"
+ :team-colours-data {:goals 7
+                     :shooting-at-railway 1
+                     :players #{"Kadir"
+                                "Tom Brooksbank"
+                                "Christian Halstead"
+                                "Mark Burnage"
+                                "John Henry Prate"
+                                "Andy Smith"
+                                "Tom Searle"
+                                "John Black"}}
+ :team-bibs-data {:goals 5
+                  :shooting-at-railway 0
+                  :players #{"Rick Miles"
+                             "Catalin Dominte"
+                             "Tim"
+                             "Richard Brown"
+                             "Ian Daley"
+                             "Dave Vann"
+                             "Stace"
+                             "Steve Rowland"}}}]

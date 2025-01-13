@@ -19,3 +19,5 @@ pom.xml.asc
 .shadow-cljs
 node_modules
 .calva/
+src/mnf_toolkit/notebook.clj
+.portal

@@ -143,11 +143,24 @@
   "Calculate average metrics for a team, using defaults for new players"
   [team player-stats]
   (let [team-stats (map (fn [player-name]
-                          (or (first (filter #(= (:player %) player-name) player-stats))
-                              (assoc default-player-stats
-                                     :player player-name
-                                     :attacking-bias 0.5
-                                     :defensive-bias 0.5)))
+                          (let [filtered-stats (filter #(= (:player %) player-name) player-stats)
+                                first-stat (first filtered-stats)
+                                result (or first-stat
+                                           (assoc default-player-stats
+                                                  :player player-name
+                                                  :player-score 0.5
+                                                  :recent-player-score 0.5
+                                                  :win-ratio 0.5
+                                                  :goal-score 0.5
+                                                  :bibs-ratio 0.5
+                                                  :railway-ratio 0.5
+                                                  :attacking-bias 0.5
+                                                  :defensive-bias 0.5
+                                                  :recent-win-ratio 0.5
+                                                  :recent-goal-score 0.5))]
+                            (when (nil? result)
+                              (println "Warning: nil result for player" player-name))
+                            result))
                         team)
         player-count (count team-stats)]
     (when (pos? player-count)
@@ -193,8 +206,8 @@
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn analyze-team-combinations
-  "Analyze all combinations and return top 100 most balanced teams"
-  [teams player-stats]
+  "Analyze all combinations and return top 5 most balanced teams"
+  [teams player-stats] 
   (let [teams-seq (if (map? teams) [teams] teams)]  ;; wrap in vector if single map
     (->> teams-seq
          (map (fn [{:keys [team1 team2]}]
