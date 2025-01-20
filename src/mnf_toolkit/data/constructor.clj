@@ -2,7 +2,29 @@
   (:require [mnf-toolkit.calcs :as mnf]
             [mnf-toolkit.data.access :as data-access]
             [mnf-toolkit.data.validation :as data-val]
-            [mnf-toolkit.data.output-tables :as tables]))
+            [mnf-toolkit.data.output-tables :as tables]
+            [mnf-toolkit.secrets :as secrets]
+            [clj-http.client :as http]
+            [cheshire.core :as json]))
+
+(def gist-id "f1a200002e540a23bb6915472198cd7e")
+
+(defn update-gist
+  "Updates a GitHub Gist with the provided content
+   Returns true on success, throws exception on failure"
+  [gist-id filename content github-token]
+  (let [url (str "https://api.github.com/gists/" gist-id)
+        headers {"Authorization" (str "token " github-token)
+                 "Accept" "application/vnd.github.v3+json"}
+        body (json/generate-string
+              {:files
+               {filename
+                {:content content}}})
+        response (http/patch url
+                             {:headers headers
+                              :body body
+                              :throw-exceptions true})]
+    (= 200 (:status response))))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn build-and-store-data!
@@ -69,7 +91,20 @@
           (spit "docs/data/mnf-data.edn" (pr-str consolidated-data))
           (catch Exception e
             (println "ERROR: Failed to write output file:" (.getMessage e))
-            (throw e)))
+            (throw e))) 
+        (println "Data stored to local EDN file successfully!")
+        
+        (println "Storing data to GIST")
+        (try 
+          (let [github-token secrets/github-token]
+             (update-gist gist-id 
+                          "mnf-data.edn"
+                          (pr-str consolidated-data)
+                          github-token))
+           (catch Exception e
+             (println "ERROR: Failed to update gist:" (.getMessage e))
+             (throw e)))
+        (println "Data stored to GIST successfully!")
 
         (println
          (str "\nProcessing complete:"

@@ -21,3 +21,4 @@ node_modules
 .calva/
 src/mnf_toolkit/notebook.clj
 .portal
+src/mnf_toolkit/secrets.clj
