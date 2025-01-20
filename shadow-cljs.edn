@@ -10,6 +10,6 @@
   
   :app-prod {:target :browser
              :output-dir "docs/js"
-             :asset-path "/mnf-toolkit/js"
+             :asset-path "/js"
              :modules {:main {:init-fn mnf-toolkit.frontend.site/innit!}}
-             :compiler-options {:closure-defines {mnf-toolkit.frontend.site/BASE-PATH "/mnf-toolkit"}}}}}
+             :compiler-options {:closure-defines {mnf-toolkit.frontend.site/BASE-PATH ""}}}}}
