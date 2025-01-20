@@ -121,5 +121,9 @@
  {:name "John Black"
   :attacking-bias 0.9
   :defensive-bias 0.1
-  :manager-rating 0.6}]
+  :manager-rating 0.6}
+ {:name "Mark Gray"
+  :attacking-bias 0.4
+  :defensive-bias 0.6
+  :manager-rating 0.5}]
 
