@@ -125,5 +125,9 @@
  {:name "Mark Gray"
   :attacking-bias 0.4
   :defensive-bias 0.6
+  :manager-rating 0.5}
+ {:name "Daniel"
+  :attacking-bias 0.4
+  :defensive-bias 0.6
   :manager-rating 0.5}]
 
