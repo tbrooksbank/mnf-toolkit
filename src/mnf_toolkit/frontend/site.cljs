@@ -5,25 +5,36 @@
             ; External Deps 
      [reagent.dom.client :as rdom]))
 
+(defn parse-route [hash]
+  (if (empty? hash)
+    {:tab "team-sheet" :params nil}
+    (let [parts (-> hash
+                    (subs 2)  ; Remove the #/
+                    (clojure.string/split #"/"))]
+      {:tab (first parts) :params (rest parts)})))
+
 ;; Navigation handling
 (defn handle-hash-change [_]
   (let [hash (.. js/window -location -hash)
-        tab (if (empty? hash)
-              "team-sheet"  ; default tab
-              (subs hash 1))]  ; remove the # from the hash
-    (swap! s/app-state assoc :active-tab tab)))
+        {:keys [tab params]} (parse-route hash)]  ; remove the # from the hash
+    (swap! s/app-state assoc 
+           :active-tab tab
+           :tab-params params)))
 
 ;; Set up hash change listener
 (defn init-routing! []
   (.addEventListener js/window "hashchange" handle-hash-change)
   (handle-hash-change nil))  ; Handle initial route
 
-(defn nav-link [id label active-tab]
-  [:a.nav-link
-    {:href (str "#" id)
+(defn nav-link 
+  ([id label active-tab]
+   (nav-link id label active-tab nil))
+  ([id label active-tab params]
+   [:a.nav-link
+    {:href (str "#/" id (when params (str "/" (clojure.string/join "/" params))))
     :class (when (= active-tab id) "active")
     :on-click #(swap! s/nav-state assoc :menu-open? false)}  ; Close menu on click
-   label])
+   label]))
 
 (defn navigation []
   (let [active-tab (:active-tab @s/app-state)
@@ -43,7 +54,8 @@
        [nav-link "players" "Player Info" active-tab]]]]))
 
 (defn main-content []
-  (let [active-tab (:active-tab @s/app-state)]
+  (let [active-tab (:active-tab @s/app-state)
+        params (:tab-params @s/app-state)]
     [:div.content
      (case active-tab
        "team-sheet" [p/team-sheet]
@@ -51,6 +63,7 @@
        "all-time-league-table" [p/league-history-component]
        "match-results" [p/match-results]
        "players" [p/player-info]
+       "match" [p/match params]
        [p/team-sheet])]))
 
 (defn app []

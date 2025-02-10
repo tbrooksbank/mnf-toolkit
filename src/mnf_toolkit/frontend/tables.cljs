@@ -72,15 +72,3 @@
    :bibs-players (get-in match [:team-bibs-data :players])
    :colours-players (get-in match [:team-colours-data :players])
    :railway (get-in match [:team-bibs-data :railway])})
-
-;; Add match detail component
-(defn match-detail [{:keys [bibs-players colours-players railway]}]
-  [:div.match-detail
-   [:div.team-detail
-    [:h4 "Team Bibs"]
-    [:p (str "Players: " (clojure.string/join ", " bibs-players))]
-    [:p (str "Railway End: " (if railway "Yes" "No"))]]
-   [:div.team-detail
-    [:h4 "Team Colours"]
-    [:p (str "Players: " (clojure.string/join ", " colours-players))]
-    [:p (str "Railway End: " (if (not railway) "Yes" "No"))]]])

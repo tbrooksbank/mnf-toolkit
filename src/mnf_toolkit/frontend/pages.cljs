@@ -111,10 +111,55 @@
       [:tbody
        (for [match (map t/format-match-row matches)]
          ^{:key (:id match)}
-         [:tr
+         [:tr {:on-click #(js/window.location.assign (str "/#/match/" (:id match))) 
+               :style {:cursor "pointer"}
+               :role "link"
+               :tab-index "0"}
           [:td (:date match)]
           [:td (:bibs-team match)]
           [:td (:bibs-score match)]
           [:td "-"]
           [:td (:colours-score match)]
           [:td (:colours-team match)]])]]]))
+
+(defn match
+  [match-id]
+  (let [matches (into [] (:match-data @s/app-state))
+        clean-id (js/parseInt (first match-id))
+        match (first (filter #(= (:match-id %) clean-id) matches))
+        team-colours (get-in match [:team-colours-data])
+        team-colours-players (get-in team-colours [:players])
+        team-colours-goals (get-in team-colours [:goals])
+        team-colours-railway (get-in team-colours [:shooting-at-railway])
+        team-bibs (get-in match [:team-bibs-data])
+        team-bibs-players (get-in team-bibs [:players])
+        team-bibs-goals (get-in team-bibs [:goals])
+        team-bibs-railway (get-in team-bibs [:shooting-at-railway])] 
+    [:div {:class "team-sheet-container"}
+     [:div {:class "team-sheet-row"}
+      [:h2 {:style {:justify-content "center"}}
+       (str "Team Colours " team-colours-goals " - " team-bibs-goals " Team Bibs")]
+      [:h2 (str "Match Date: " (.toLocaleDateString (get-in match [:date])))]]
+     [:div {:class "team-sheet-row"}
+    ; Team 1
+     [:div {:class "team-sheet-column"}
+      [:h3 "Team Colours"]
+      [:ul {:style {:list-style-type "none"}}
+       (for [player team-colours-players]
+         ^{:key player}
+         [:li
+          {:class ["colours-player-box"
+                   (when (= team-colours-railway 1) "railway-background")]}
+          [:span {:class "colours-player-text"}
+           player]])]]
+              ; Team 2
+     [:div {:class "team-sheet-column"}
+      [:h3 "Team Bibs"]
+      [:ul {:style {:list-style-type "none"}}
+       (for [player team-bibs-players]
+         ^{:key player}
+         [:li
+          {:class ["bibs-player-box"
+                   (when (= team-bibs-railway 1) "railway-background")]}
+          [:span {:class "bibs-player-text"}
+           player]])]]]]))

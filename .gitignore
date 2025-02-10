@@ -22,3 +22,4 @@ node_modules
 src/mnf_toolkit/notebook.clj
 .portal
 src/mnf_toolkit/secrets.clj
+docs/js

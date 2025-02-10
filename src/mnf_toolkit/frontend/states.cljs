@@ -8,7 +8,8 @@
 (defonce root-atom (atom nil))
 
 (def app-state
-  (r/atom {:active-tab {:page "team-sheet"}
+  (r/atom {:active-tab "team-sheet"
+           :tab-params nil
            :league-table nil
            :current-league-table nil
            :match-data nil
