@@ -50,8 +50,7 @@
        [nav-link "team-sheet" "Team Sheet" active-tab]
        [nav-link "league-table" "League Table" active-tab]
        [nav-link "all-time-league-table" "All Time League Table" active-tab]
-       [nav-link "match-results" "Match Results" active-tab]
-       [nav-link "players" "Player Info" active-tab]]]]))
+       [nav-link "match-results" "Match Results" active-tab]]]]))
 
 (defn main-content []
   (let [active-tab (:active-tab @s/app-state)
@@ -61,9 +60,9 @@
        "team-sheet" [p/team-sheet]
        "league-table" [p/league-table-component]
        "all-time-league-table" [p/league-history-component]
-       "match-results" [p/match-results]
-       "players" [p/player-info]
+       "match-results" [p/match-results] 
        "match" [p/match params]
+       "player" [p/player params]
        [p/team-sheet])]))
 
 (defn app []

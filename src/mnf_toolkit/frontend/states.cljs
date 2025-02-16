@@ -13,7 +13,7 @@
            :league-table nil
            :current-league-table nil
            :match-data nil
-           :player-info nil}))
+           :raw-player-stats nil}))
 
 (defn load-data! []
   (println "Loading data...")
@@ -23,7 +23,7 @@
                        (swap! app-state assoc
                               :league-table (:league-table %)
                               :current-league-table (:current-year-table %)
-                              :player-info (:player-info %)
+                              :raw-player-stats (:raw-player-stats %)
                               :match-data (:match-data %)))))
 
 (def nav-state (r/atom {:menu-open? false}))

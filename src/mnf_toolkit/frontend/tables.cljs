@@ -51,7 +51,10 @@
                                data)]
              (for [row sorted-data]
                ^{:key (hash row)}
-               [:tr
+               [:tr {:on-click #(js/window.location.assign (str "/#/player/" (:player row)))
+                     :style {:cursor "pointer"}
+                     :role "link"
+                     :tab-index "0"}
                 (doall
                  (for [header columns]
                    ^{:key (str (hash row) header)}

@@ -219,4 +219,26 @@
                              "Catalin Dominte"
                              "Dave Vann"
                              "Ian Daley"
-                             "Zam"}}}]
+                             "Zam"}}}
+{:match-id 11
+ :date #inst "2025-02-10T00:00:00.000-00:00"
+ :team-colours-data {:goals 3
+                     :shooting-at-railway 1
+                     :players #{"Ian Daley"
+                                "Catalin Dominte"
+                                "Steve Rowland"
+                                "Gordon"
+                                "Zam"
+                                "John Henry Prate"
+                                "John Black"
+                                "Adam Turnbull"}}
+ :team-bibs-data {:goals 5
+                  :shooting-at-railway 0
+                  :players #{"Chris"
+                             "Tom Brooksbank"
+                             "Gary"
+                             "Berk"
+                             "Andy Smith"
+                             "Mark Burnage"
+                             "Saffet"
+                             "Tim"}}}]

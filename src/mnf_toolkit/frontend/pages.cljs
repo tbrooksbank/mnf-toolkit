@@ -1,12 +1,13 @@
 (ns mnf-toolkit.frontend.pages
   (:require ;Internal Deps
-            [mnf-toolkit.frontend.data-sourcing :as ds]
-            [mnf-toolkit.frontend.tables :as t] 
-            [mnf-toolkit.frontend.states :as s]
+   [mnf-toolkit.frontend.data-sourcing :as ds]
+   [mnf-toolkit.frontend.tables :as t]
+   [mnf-toolkit.frontend.states :as s]
             ; External Deps
-            [cljs.core.async :refer [<! go]]
-            [reagent.core :as r]
-            [cljs-http.client :as http]))
+   [cljs.core.async :refer [<! go]]
+   [clojure.string]
+   [reagent.core :as r]
+   [cljs-http.client :as http]))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn team-sheet []
@@ -90,11 +91,6 @@
        [:div "Loading league table..."]
        [t/data-table data :league]))])
 
-(defn player-info []
-  [:div.section
-   [:h2 "Player Info"]
-   [:p "Coming soon"]])
-
 (defn match-results []
   (let [matches (:match-data @s/app-state)]
     [:div.section
@@ -163,3 +159,84 @@
                    (when (= team-bibs-railway 1) "railway-background")]}
           [:span {:class "bibs-player-text"}
            player]])]]]]))
+
+(defn stat-card [title value & [info]]
+  [:div {:style {:flex "0 0 calc(33.333% - 16px)"
+                 :min-width "250px"
+                 :margin "8px"
+                 :padding "16px"
+                 :border "1px solid #e2e8f0"
+                 :border-radius "8px"
+                 :background-color "white"
+                 :position "relative"}  ; Added for tooltip positioning
+         :on-mouse-enter #(when info
+                            (-> % .-target (.querySelector ".tooltip") .-style .-display (set! "block")))
+         :on-mouse-leave #(when info
+                            (-> % .-target (.querySelector ".tooltip") .-style .-display (set! "none")))}
+   [:div {:style {:color "#718096"
+                  :font-size "14px"
+                  :margin-bottom "4px"
+                  :display "flex"
+                  :align-items "center"}}
+    title
+    (when info
+      [:div.tooltip {:style {:display "none"
+                             :position "absolute"
+                             :top "100%"
+                             :left "50%"
+                             :transform "translateX(-50%)"
+                             :background-color "#1a1a1a"
+                             :color "white"
+                             :padding "8px 12px"
+                             :border-radius "6px"
+                             :font-size "12px"
+                             :max-width "200px"
+                             :z-index "10"
+                             :text-align "center"
+                             :box-shadow "0 2px 4px rgba(0,0,0,0.2)"}}
+       info])]
+   [:div {:style {:font-size "18px"
+                  :font-weight "600"}}
+    (if (number? value)
+      (.toFixed value 2)
+      (str value))]])
+
+(defn player
+  [player-id]
+  (let [player-stats (:raw-player-stats @s/app-state)
+        clean-player (js/decodeURIComponent (first player-id))
+        player (first (filter #(= (:player %) clean-player) player-stats))]
+    [:div
+     [:h1 {:style {:font-size "24px"
+                   :font-weight "bold"
+                   :margin-bottom "24px"}}
+      clean-player "'s Stats"]
+     [:div {:style {:display "flex"
+                    :flex-wrap "wrap"
+                    :margin "-8px"  ; Compensate for card margins
+                    :width "100%"}}
+      ;; Game Stats
+      [stat-card "Games Played" (:games-played player)]
+      [stat-card "Games Won" (:games-won player)]
+      [stat-card "Games Lost" (:games-lost player)]
+
+      ;; Goal Stats
+      [stat-card "Goals For" (:goals-for player)]
+      [stat-card "Goals Against" (:goals-against player)]
+      [stat-card "Goal Difference" (:goal-difference player)]
+
+      ;; Performance Stats
+      [stat-card "All Time Win Ratio" (:win-ratio player)]
+      [stat-card "Last 5 Win Ratio" (:recent-win-ratio player)]
+      [stat-card "Average Goal Difference" (:avg-goal-diff player)]
+
+      ;; Bias Stats
+      [stat-card "Attacking Bias" (:attacking-bias player)
+       "Percived bias towards attacking play, manually set to try and balance teams. 0.5 is neutral, contact if you disagree."]
+      [stat-card "Defensive Bias" (:defensive-bias player)
+       "Percived bias towards defensive play, manually set to try and balance teams. 0.5 is neutral, contact if you disagree."]
+      [stat-card "Last 5 Average Goal Difference" (:recent-goal-diff player)]
+
+      ;; Other Metrics
+      [stat-card "Railway Ratio" (:railway-ratio player)]
+      [stat-card "Bibs Ratio" (:bibs-ratio player)]]]))
