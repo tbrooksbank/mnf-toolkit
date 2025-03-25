@@ -9,7 +9,45 @@
    [reagent.core :as r]
    [cljs-http.client :as http]))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+(defn stat-card [title value & {:keys [width info]}]
+  [:div {:style {:flex (str "0 0 calc(" (or width "33.333%") " - 16px)")
+                 :min-width "250px"
+                 :margin "8px"
+                 :padding "16px"
+                 :border "1px solid #e2e8f0"
+                 :border-radius "8px"
+                 :background-color "white"
+                 :position "relative"}  ; Added for tooltip positioning
+         :on-mouse-enter #(when info
+                            (-> % .-target (.querySelector ".tooltip") .-style .-display (set! "block")))
+         :on-mouse-leave #(when info
+                            (-> % .-target (.querySelector ".tooltip") .-style .-display (set! "none")))}
+   [:div {:style {:color "#718096"
+                  :font-size "14px"
+                  :margin-bottom "4px"
+                  :display "flex"
+                  :align-items "center"}}
+    title
+    (when info
+      [:div.tooltip {:style {:display "none"
+                             :position "absolute"
+                             :top "100%"
+                             :left "50%"
+                             :transform "translateX(-50%)"
+                             :background-color "#1a1a1a"
+                             :color "white"
+                             :padding "8px 12px"
+                             :border-radius "6px"
+                             :font-size "12px"
+                             :max-width "200px"
+                             :z-index "10"
+                             :text-align "center"
+                             :box-shadow "0 2px 4px rgba(0,0,0,0.2)"}}
+       info])]
+   [:div {:style {:font-size "18px"
+                  :font-weight "600"}}
+    value]])
+
 (defn team-sheet []
   (let [teams (r/atom {:team1 []
                        :team2 []
@@ -43,37 +81,80 @@
          [:h3 (if (= (:teams-finalised @teams) "Yes")
                 "Teams Finalised"
                 "Teams Not Yet Decided, Check Back Later")]
+
+         ;; New Stats Flexbox Container
+         ;[:div {:style {:display "flex"
+         ;               :flex-wrap "wrap"
+         ;               :justify-content "center"}}
+         ; [stat-card "Team 1 xG" 4.3]
+         ; [stat-card "Predicted Score" "4-5"]
+         ; [stat-card "Team 2 xG" 5.4]]
+
          [:div {:class "team-sheet-row"}
           ; Team 1
           [:div {:class "team-sheet-column"}
            [:h3 "Team 1"]
-            [:ul {:style {:list-style-type "none"}}
-             (for [player (get-in @teams [:team1 :players])]
-               ^{:key player}
-               [:li
-                {:class [(if (= (get-in @teams [:team1 :Bibs]) "Yes")
-                           "bibs-player-box"
-                           "colours-player-box")
-                         (when (= (get-in @teams [:team1 :Railway]) "Yes") "railway-background")]}
-                [:span {:class (if (= (get-in @teams [:team1 :Bibs]) "Yes")
-                                 "bibs-player-text" 
-                                 "colours-player-text")}
-                 player]])]]
+           [:ul {:style {:list-style-type "none"}}
+            (for [player (get-in @teams [:team1 :players])]
+              ^{:key player}
+              [:li
+               {:on-click #(js/window.location.assign (str "/#/player/" player))
+                :style {:cursor "pointer"}
+                :role "link"
+                :tab-index "0"
+                :class [(if (= (get-in @teams [:team1 :Bibs]) "Yes")
+                          "bibs-player-box"
+                          "colours-player-box")
+                        (when (= (get-in @teams [:team1 :Railway]) "Yes") "railway-background")]}
+               [:span {:class (if (= (get-in @teams [:team1 :Bibs]) "Yes")
+                                "bibs-player-text"
+                                "colours-player-text")}
+                player]])]]
           ; Team 2
           [:div {:class "team-sheet-column"}
            [:h3 "Team 2"]
-            [:ul {:style {:list-style-type "none"}}
-             (for [player (get-in @teams [:team2 :players])]
-               ^{:key player}
-               [:li
-                {:class [(if (= (get-in @teams [:team2 :Bibs]) "Yes")
+           [:ul {:style {:list-style-type "none"}}
+            (for [player (get-in @teams [:team2 :players])]
+              ^{:key player}
+              [:li
+               {:on-click #(js/window.location.assign (str "/#/player/" player))
+                :style {:cursor "pointer"}
+                :role "link"
+                :tab-index "0"
+                :class [(if (= (get-in @teams [:team2 :Bibs]) "Yes")
                           "bibs-player-box"
                           "colours-player-box")
-                         (when (= (get-in @teams [:team2 :Railway]) "Yes") "railway-background")]}
-                [:span {:class (if (= (get-in @teams [:team2 :Bibs]) "Yes")
-                                  "bibs-player-text"
-                                  "colours-player-text")}
-                 player]])]]]])})))
+                        (when (= (get-in @teams [:team2 :Railway]) "Yes") "railway-background")]}
+               [:span {:class (if (= (get-in @teams [:team2 :Bibs]) "Yes")
+                                "bibs-player-text"
+                                "colours-player-text")}
+                player]])]]]
+
+         ;[:div {:style {:display "flex" 
+          ;              :flex-wrap "wrap"
+          ;              :justify-content "center"}} 
+          ;[:div {:style {:display "flex"
+          ;               :flex-wrap "wrap" 
+          ;               :flex "0 0 33%"}}
+          ; [:h3 "Team 1 Stats"]
+          ; [stat-card "Example T1 Stat" 5 :width "100%"] 
+          ; [stat-card "Example T1 Stat" 4 :width "100%"] 
+          ; [stat-card "Example T1 Stat" 3 :width "100%"]]
+          ;[:div {:style {:display "flex"
+          ;               :flex-wrap "wrap"
+          ;               :flex "0 0 33%"}}
+          ; [:h3 "Differentials"]
+          ; [stat-card "Example Differential" 4 :width "100%"]
+          ; [stat-card "Example Differential" 2 :width "100%"]
+          ; [stat-card "Example Differential" 0 :width "100%"]]
+          ;[:div {:style {:display "flex"
+           ;              :flex-wrap "wrap" 
+           ;              :flex "0 0 33%"}}
+           ;[:h3 "Team 2 Stats"]
+           ;[stat-card "Example T2 Stat" 1 :width "100%"]
+           ;[stat-card "Example T2 Stat" 2 :width "100%"]
+           ;[stat-card "Example T2 Stat" 3 :width "100%"]]]
+           ])})))
 
 (defn league-table-component []
   [:div.section
@@ -132,10 +213,17 @@
         team-bibs-goals (get-in team-bibs [:goals])
         team-bibs-railway (get-in team-bibs [:shooting-at-railway])] 
     [:div {:class "team-sheet-container"}
-     [:div {:class "team-sheet-row"}
-      [:h2 {:style {:justify-content "center"}}
-       (str "Team Colours " team-colours-goals " - " team-bibs-goals " Team Bibs")]
-      [:h2 (str "Match Date: " (.toLocaleDateString (get-in match [:date])))]]
+     [:h2 (str "Match Date: " (.toLocaleDateString (get-in match [:date])))]
+     [:div {:style {:display "flex"
+                    :flex-wrap "wrap"
+                    :justify-content "center"}}
+      [stat-card "Team Colours" team-colours-goals]
+      [stat-card "Result" (if (= team-colours-goals team-bibs-goals)
+                            "Draw"
+                            (if (> team-colours-goals team-bibs-goals)
+                            "Team Colours Win"
+                            "Team Bibs Win"))]
+      [stat-card "Team Bibs" team-bibs-goals]] 
      [:div {:class "team-sheet-row"}
     ; Team 1
      [:div {:class "team-sheet-column"}
@@ -144,7 +232,11 @@
        (for [player team-colours-players]
          ^{:key player}
          [:li
-          {:class ["colours-player-box"
+          {:on-click #(js/window.location.assign (str "/#/player/" player))
+           :style {:cursor "pointer"}
+           :role "link"
+           :tab-index "0"
+           :class ["colours-player-box"
                    (when (= team-colours-railway 1) "railway-background")]}
           [:span {:class "colours-player-text"}
            player]])]]
@@ -155,51 +247,14 @@
        (for [player team-bibs-players]
          ^{:key player}
          [:li
-          {:class ["bibs-player-box"
+          {:on-click #(js/window.location.assign (str "/#/player/" player))
+           :style {:cursor "pointer"}
+           :role "link"
+           :tab-index "0"
+           :class ["bibs-player-box"
                    (when (= team-bibs-railway 1) "railway-background")]}
           [:span {:class "bibs-player-text"}
            player]])]]]]))
-
-(defn stat-card [title value & [info]]
-  [:div {:style {:flex "0 0 calc(33.333% - 16px)"
-                 :min-width "250px"
-                 :margin "8px"
-                 :padding "16px"
-                 :border "1px solid #e2e8f0"
-                 :border-radius "8px"
-                 :background-color "white"
-                 :position "relative"}  ; Added for tooltip positioning
-         :on-mouse-enter #(when info
-                            (-> % .-target (.querySelector ".tooltip") .-style .-display (set! "block")))
-         :on-mouse-leave #(when info
-                            (-> % .-target (.querySelector ".tooltip") .-style .-display (set! "none")))}
-   [:div {:style {:color "#718096"
-                  :font-size "14px"
-                  :margin-bottom "4px"
-                  :display "flex"
-                  :align-items "center"}}
-    title
-    (when info
-      [:div.tooltip {:style {:display "none"
-                             :position "absolute"
-                             :top "100%"
-                             :left "50%"
-                             :transform "translateX(-50%)"
-                             :background-color "#1a1a1a"
-                             :color "white"
-                             :padding "8px 12px"
-                             :border-radius "6px"
-                             :font-size "12px"
-                             :max-width "200px"
-                             :z-index "10"
-                             :text-align "center"
-                             :box-shadow "0 2px 4px rgba(0,0,0,0.2)"}}
-       info])]
-   [:div {:style {:font-size "18px"
-                  :font-weight "600"}}
-    (if (number? value)
-      (.toFixed value 2)
-      (str value))]])
 
 (defn player
   [player-id]
@@ -232,11 +287,84 @@
 
       ;; Bias Stats
       [stat-card "Attacking Bias" (:attacking-bias player)
-       "Percived bias towards attacking play, manually set to try and balance teams. 0.5 is neutral, contact if you disagree."]
+       :info "Percived bias towards attacking play, manually set to try and balance teams. 0.5 is neutral, contact if you disagree."]
       [stat-card "Defensive Bias" (:defensive-bias player)
-       "Percived bias towards defensive play, manually set to try and balance teams. 0.5 is neutral, contact if you disagree."]
+       :info "Percived bias towards defensive play, manually set to try and balance teams. 0.5 is neutral, contact if you disagree."]
       [stat-card "Last 5 Average Goal Difference" (:recent-goal-diff player)]
 
       ;; Other Metrics
       [stat-card "Railway Ratio" (:railway-ratio player)]
       [stat-card "Bibs Ratio" (:bibs-ratio player)]]]))
+
+(defn player-selector [team-key index teams]
+  (let [players (map :player (:raw-player-stats @s/app-state))]
+    [:div.player-select
+     [:label (str "Player " (inc index) ": ")]
+     [:select
+      {:value (get-in @teams [team-key index] "")
+       :on-change #(swap! teams assoc-in [team-key index] (.. % -target -value))}
+      [:option {:value ""} "-- Select Player --"]
+      (for [player players]
+        [:option {:key player :value player} player])]]))
+
+(defn team-builder []
+  (let [teams (r/atom {:team1 nil
+                       :team2 nil})]
+    (fn []
+      [:div.section.team-builder
+       [:h2 "Team Builder"]
+       [:p (last [:team1 teams])]
+       [:p [:team2 teams]]
+
+       ;; Teams container with flexbox for side-by-side layout
+       [:div.teams-container {:style {:display "flex"
+                                      :flex-direction "row"
+                                      :gap "2rem"
+                                      :justify-content "space-between"}}
+
+        ;; Team 1
+        [:div.team {:style {:flex "1"}}
+         [:h3 "Team 1"]
+         [:div.selectors
+          (for [i (range 8)]
+            ^{:key (str "team1-" i)}
+            [player-selector :team1 i teams])]]
+
+        ;; Team 2
+        [:div.team {:style {:flex "1"}}
+         [:h3 "Team 2"]
+         [:div.selectors
+          (for [i (range 8)]
+            ^{:key (str "team2-" i)}
+            [player-selector :team2 i teams])]]]
+
+       ;; Placeholder div for stats below the selectors
+       [:div.team-stats-placeholder {:style {:margin-top "2rem"
+                                             :padding "1.5rem"
+                                             :border "1px dashed #ccc"
+                                             :border-radius "0.5rem"}}
+        [:h3 "Team Statistics"]
+        [:p "Player statistics will appear here after team selection."]
+
+        ;; Two columns for team stats
+        [:div {:style {:display "flex"
+                       :flex-direction "row"
+                       :gap "2rem"
+                       :margin-top "1rem"}}
+
+         ;; Team 1 stats placeholder
+         [:div.team1-stats {:style {:flex "1"
+                                    :padding "1rem"
+                                    :background-color "#f5f5f5"
+                                    :border-radius "0.5rem"}}
+          [:h4 "Team 1 Stats"]
+          [:p "Statistics for Team 1 players will appear here."]
+          [:p ]]
+
+         ;; Team 2 stats placeholder
+         [:div.team2-stats {:style {:flex "1"
+                                    :padding "1rem"
+                                    :background-color "#f5f5f5"
+                                    :border-radius "0.5rem"}}
+          [:h4 "Team 2 Stats"]
+          [:p "Statistics for Team 2 players will appear here."]]]]])))

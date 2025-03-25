@@ -129,5 +129,17 @@
  {:name "Daniel"
   :attacking-bias 0.4
   :defensive-bias 0.6
-  :manager-rating 0.5}]
+  :manager-rating 0.5}
+ {:name "Simon B"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.5}
+ {:name "Calvin"
+  :attacking-bias 0.3
+  :defensive-bias 0.7
+  :manager-rating 0.7}
+ {:name "Ollie Heard"
+  :attacking-bias 0.4
+  :defensive-bias 0.6
+  :manager-rating 0.65}]
 

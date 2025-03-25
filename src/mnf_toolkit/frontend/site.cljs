@@ -50,7 +50,9 @@
        [nav-link "team-sheet" "Team Sheet" active-tab]
        [nav-link "league-table" "League Table" active-tab]
        [nav-link "all-time-league-table" "All Time League Table" active-tab]
-       [nav-link "match-results" "Match Results" active-tab]]]]))
+       [nav-link "match-results" "Match Results" active-tab]
+       ;[nav-link "team-builder" "Team Builder" active-tab]
+       ]]]))
 
 (defn main-content []
   (let [active-tab (:active-tab @s/app-state)
@@ -63,6 +65,7 @@
        "match-results" [p/match-results] 
        "match" [p/match params]
        "player" [p/player params]
+       "team-builder" [p/team-builder]
        [p/team-sheet])]))
 
 (defn app []
@@ -80,6 +83,7 @@
 ;; Initialize app
 (defn init! []
   (s/load-data!)
+  ;(s/local-load-data!)
   (when-not @s/root-atom
     (reset! s/root-atom (rdom/create-root (.getElementById js/document "app"))))
   (init-routing!)  ; Initialize routing
