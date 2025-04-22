@@ -36,7 +36,7 @@
     (max 0.0 (min 1.0 normalized))))
 
 (defn round-4dp [n]
-  (Double/parseDouble (format "%.4f" n)))
+  (js/parseFloat (.toFixed n 4)))
 
 (defn calculate-player-stats
   "Calculate statistics for all players and enrich with player attributes"

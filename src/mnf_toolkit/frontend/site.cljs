@@ -48,8 +48,7 @@
      [:div.nav-menu {:class (when menu-open? "is-open")}
       [:div.nav-left
        [nav-link "team-sheet" "Team Sheet" active-tab]
-       [nav-link "league-table" "League Table" active-tab]
-       [nav-link "all-time-league-table" "All Time League Table" active-tab]
+       [nav-link "league-table" "League Tables" active-tab] 
        [nav-link "match-results" "Match Results" active-tab]
        ;[nav-link "team-builder" "Team Builder" active-tab]
        ]]]))
@@ -60,12 +59,11 @@
     [:div.content
      (case active-tab
        "team-sheet" [p/team-sheet]
-       "league-table" [p/league-table-component]
-       "all-time-league-table" [p/league-history-component]
+       "league-table" [p/league-table]
        "match-results" [p/match-results] 
        "match" [p/match params]
        "player" [p/player params]
-       "team-builder" [p/team-builder]
+       "team-builder" [p/team-builder] 
        [p/team-sheet])]))
 
 (defn app []

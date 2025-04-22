@@ -79,7 +79,9 @@
                             (println "Error: Failed to generate player info from player stats:" (.getMessage e))
                             (throw e)))
 
-            consolidated-data {:raw-player-stats raw-player-stats
+            consolidated-data {:raw-match-data match-data
+                               :raw-players players
+                               :raw-player-stats raw-player-stats
                                :league-table league-table
                                :current-year-table current-year-league-table
                                :player-info player-info

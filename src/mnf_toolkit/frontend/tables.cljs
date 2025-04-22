@@ -15,7 +15,7 @@
 
 ;; Define the column orders
 (def league-columns
-  [:player :played :won :drawn :lost :points :gf :ga :gd])
+  [:position :player :played :won :drawn :lost :points :gf :ga :gd])
 
 (def player-columns
   [:player :current-rating :lifetime-rating :baseline-rating])

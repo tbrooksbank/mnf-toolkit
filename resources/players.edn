@@ -141,5 +141,9 @@
  {:name "Ollie Heard"
   :attacking-bias 0.4
   :defensive-bias 0.6
-  :manager-rating 0.65}]
+  :manager-rating 0.65}
+ {:name "Alex Gordon"
+  :attacking-bias 0.6
+  :defensive-bias 0.4
+  :manager-rating 0.6}]
 
