@@ -123,3 +123,85 @@
      (->> filtered-matches 
           calculate-player-stats
           league-table*))))
+
+(defn add-ratio-stats
+  "Adds ratio statistics to each player's stats map."
+  [player-stats]
+  (map (fn [player]
+         (let [{:keys [wins losses goals-for goals-against total-games
+                       shooting-at-railway-games bibs-games]} player]
+           (assoc player
+                  :win-ratio (if (and (number? wins) (number? total-games) (not (zero? total-games)))
+                               (/ (* 1.0 wins) total-games)
+                               0)
+                  :loss-ratio (if (and (number? losses) (number? total-games) (not (zero? total-games)))
+                                (/ (* 1.0 losses) total-games)
+                                0)
+                  :goals-scored-per-game (if (and (number? goals-for) (number? total-games) (not (zero? total-games)))
+                                           (/ (* 1.0 goals-for) total-games)
+                                           0)
+                  :goals-conceded-per-game (if (and (number? goals-against) (number? total-games) (not (zero? total-games)))
+                                             (/ (* 1.0 goals-against) total-games)
+                                             0)
+                  :railway-per-game (if (and (number? shooting-at-railway-games) (number? total-games) (not (zero? total-games)))
+                                       (/ (* 1.0 shooting-at-railway-games) total-games)
+                                       0)
+                  :bibs-per-game (if (and (number? bibs-games) (number? total-games) (not (zero? total-games)))
+                                   (/ (* 1.0 bibs-games) total-games)
+                                   0))))
+       player-stats))
+
+(defn hall-of-fame*
+  "Calculates various hall of fame statistics from player stats."
+  [player-stats number-of-games]
+  (let [modified-stats (add-ratio-stats player-stats)
+        filtered-stats (filter #(>= (:total-games %) number-of-games) modified-stats)
+        appearances (sort-by :total-games > filtered-stats)
+        win-ratios (sort-by :win-ratio > filtered-stats)
+        loss-ratios (sort-by :loss-ratio > filtered-stats)
+        goals-scored (sort-by :goals-scored-per-game > filtered-stats)
+        goals-conceded (sort-by :goals-conceded-per-game < filtered-stats)
+        league-positions (league-table* player-stats)
+        railway-lover (sort-by :railway-per-game > filtered-stats)
+        bibs-lover (sort-by :bibs-per-game > filtered-stats)]
+
+    {:appearances {:player (:player (first appearances))
+                   :value (:total-games (first appearances))}
+     :best-win-ratio {:player (:player (first win-ratios))
+                      :value (:win-ratio (first win-ratios))}
+     :highest-loss-ratio {:player (:player (first loss-ratios))
+                          :value (:loss-ratio (first loss-ratios))}
+     :highest-avg-goals-scored {:player (:player (first goals-scored))
+                                :total (:goals-for (first goals-scored))
+                                :per-game (:goals-scored-per-game (first goals-scored))}
+     :lowest-avg-goals-conceded {:player (:player (first goals-conceded))
+                                 :total (:goals-against (first goals-conceded))
+                                 :per-game (:goals-conceded-per-game (first goals-conceded))}
+     :top-of-the-table {:player (:player (first league-positions))
+                        :points (:points (first league-positions))
+                        :goal-difference (:gd (first league-positions))}
+     :railway-lover {:player (:player (first railway-lover))
+                     :value (:railway-per-game (first railway-lover))}
+     :bibs-lover {:player (:player (first bibs-lover))
+                  :value (:bibs-per-game (first bibs-lover))}
+     :filtered-stats railway-lover}))
+
+(defn hall-of-fame
+  ([matches] 
+  (let [number-of-games-for-calcs (max 3 (inc (quot (count matches) 2)))]
+   (-> matches
+       calculate-player-stats
+       (hall-of-fame* number-of-games-for-calcs))))
+  ([matches opts]
+   (let [{:keys [from to]} opts
+         filtered-matches (filter (fn [{:keys [date]}]
+                                    (let [match-time (.getTime date)
+                                          from-time (if from (.getTime from) ##-Inf)
+                                          to-time (if to (.getTime to) ##Inf)]
+                                      (and (>= match-time from-time)
+                                           (<= match-time to-time))))
+                                  matches)
+         number-of-games-for-calcs (max 3 (inc (quot (count matches) 2)))]
+     (-> filtered-matches
+          calculate-player-stats
+         (hall-of-fame* number-of-games-for-calcs)))))

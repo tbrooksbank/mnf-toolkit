@@ -36,7 +36,7 @@
     (max 0.0 (min 1.0 normalized))))
 
 (defn round-4dp [n]
-  (js/parseFloat (.toFixed n 4)))
+  (Double/parseDouble (format "%.4f" n)))
 
 (defn calculate-player-stats
   "Calculate statistics for all players and enrich with player attributes"
@@ -117,7 +117,6 @@
                                                             (* 0.1 (:recent-goal-score merged-stats))))))))
          (sort-by :games-played >))))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn generate-team-combinations
   "Generate all possible combinations of two 8-person teams from 16 players.
    Returns a sequence of maps, each containing :team1 and :team2"
@@ -204,7 +203,6 @@
     ;; Optional: cap extreme values
     (max 0.5 (min 1.5 balance-score))))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn analyze-team-combinations
   "Analyze all combinations and return top 5 most balanced teams"
   [teams player-stats] 

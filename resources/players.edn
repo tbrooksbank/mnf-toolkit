@@ -145,5 +145,29 @@
  {:name "Alex Gordon"
   :attacking-bias 0.6
   :defensive-bias 0.4
+  :manager-rating 0.7}
+ {:name "Steven Lucas"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.5}
+ {:name "Alex Collyer"
+  :attacking-bias 0.6
+  :defensive-bias 0.4
+  :manager-rating 0.6}
+ {:name "Tom Bains"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.4}
+ {:name "Stu Green"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.6}
+ {:name "Jamie Randell"
+  :attacking-bias 0.7
+  :defensive-bias 0.3
+  :manager-rating 0.7}
+ {:name "Neil B"
+  :attacking-bias 0.4
+  :defensive-bias 0.6
   :manager-rating 0.6}]
 

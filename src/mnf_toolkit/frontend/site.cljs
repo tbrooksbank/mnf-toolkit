@@ -1,8 +1,9 @@
 (ns mnf-toolkit.frontend.site 
-    (:require ; Internal Deps 
+    (:require 
+     ; Internal Deps 
      [mnf-toolkit.frontend.pages :as p]
      [mnf-toolkit.frontend.states :as s]
-            ; External Deps 
+     ; External Deps 
      [reagent.dom.client :as rdom]))
 
 (defn parse-route [hash]
@@ -50,6 +51,7 @@
        [nav-link "team-sheet" "Team Sheet" active-tab]
        [nav-link "league-table" "League Tables" active-tab] 
        [nav-link "match-results" "Match Results" active-tab]
+       [nav-link "hall-of-fame" "Hall of Fame" active-tab]
        ;[nav-link "team-builder" "Team Builder" active-tab]
        ]]]))
 
@@ -63,6 +65,7 @@
        "match-results" [p/match-results] 
        "match" [p/match params]
        "player" [p/player params]
+       "hall-of-fame" [p/hall-of-fame]
        "team-builder" [p/team-builder] 
        [p/team-sheet])]))
 
@@ -81,10 +84,9 @@
 ;; Initialize app
 (defn init! []
   (s/load-data!)
-  ;(s/local-load-data!)
   (when-not @s/root-atom
     (reset! s/root-atom (rdom/create-root (.getElementById js/document "app"))))
-  (init-routing!)  ; Initialize routing
+  (init-routing!)
   (rdom/render @s/root-atom [app]))
 
 ;; Initialize once

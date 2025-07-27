@@ -4,6 +4,7 @@
    [mnf-toolkit.frontend.pages.league-table-page :as lt]
    [mnf-toolkit.frontend.pages.match-results-page :as mr]
    [mnf-toolkit.frontend.pages.player-page :as pp]
+   [mnf-toolkit.frontend.pages.hall-of-fame-page :as hof]
    [mnf-toolkit.frontend.pages.team-builder-page :as tb]
    ; External Deps 
    [clojure.string]))
@@ -19,3 +20,5 @@
 (defn player [player-id] (pp/player-page-builder player-id))
 
 (defn team-builder [] (tb/team-builder-page-builder))
+
+(defn hall-of-fame [] (hof/hall-of-fame-page-builder))

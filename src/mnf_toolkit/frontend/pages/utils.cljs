@@ -4,6 +4,34 @@
    [cljs.core.async :refer [<! go]]
    [cljs-http.client :as http]))
 
+
+(defn selector-button-group
+  "Creates a button group for selecting options from a provided list.
+   
+   Parameters:
+   - atom: An atom containing a map with a key specified by key-path
+   - options: A sequence of [key label] pairs for the buttons
+   - config: Optional map of configuration options:
+     - :key-path: The key path in the atom to update (default :time-frame)
+     - :selected-color: Background color for selected button (default \"#d1e7dd\")
+     - :default-color: Background color for non-selected buttons (default \"white\")
+  "
+  [atom options & [{:keys [key-path selected-color default-color]
+                    :or {key-path :time-frame
+                         selected-color "#d1e7dd"
+                         default-color "white"}}]]
+  [:div.btn-group {:style {:margin "-8px"  ; Compensate for card margins 
+                           :width "100%"}}
+   (doall
+    (for [[key label] options]
+      [:button.btn.btn-default {:key key
+                                :on-click #(swap! atom assoc key-path key)
+                                :style {:cursor "pointer"
+                                        :background-color (if (= (get @atom key-path) key)
+                                                            selected-color
+                                                            default-color)}}
+       label]))])
+
 (defn load-team-data [teams]
   (go
     (let [url (str "https://docs.google.com/spreadsheets/d/"

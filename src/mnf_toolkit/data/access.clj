@@ -2,7 +2,6 @@
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn load-data
   "Load match data from EDN file"
   [file-path]

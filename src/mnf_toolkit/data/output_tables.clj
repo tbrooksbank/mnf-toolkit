@@ -33,13 +33,11 @@
                (str date)
                java.time.format.DateTimeFormatter/ISO_DATE_TIME))))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn current-year-league-table [players matches]
   (let [current-year-matches (filter #(= 2025 (get-year-from-date (:date %))) matches)
         current-year-player-stats (calcs/calculate-player-stats current-year-matches players)]
     (league-table current-year-player-stats)))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn player-info [player-stats]
   (->> player-stats
        (map (fn [stat]

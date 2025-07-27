@@ -12,6 +12,12 @@
   (let [player-stats (calcs/calculate-player-stats (:raw-match-data @s/app-state))
         clean-player (js/decodeURIComponent (first player-id))
         player (first (filter #(= (:player %) clean-player) player-stats))
+        start-date (js/Date. "2025-01-01")
+        end-date (js/Date. "2025-12-31")
+        current-season-stats (calcs/calculate-player-stats (:raw-match-data @s/app-state) 
+                                                           {:from start-date 
+                                                            :to end-date})
+        player-2025-stats (first (filter #(= (:player %) clean-player) current-season-stats))
         last-5-player-stats (calcs/calculate-player-stats (:raw-match-data @s/app-state)
                                                           {:from (:start-date (:last-5-games @s/app-state))
                                                            :to (:end-date (:last-5-games @s/app-state))})
@@ -24,38 +30,15 @@
      [:h1 {:style {:font-size "24px"
                    :font-weight "bold"
                    :margin-bottom "24px"}}
-      clean-player "'s Stats"]
-     [:div.btn-group {:style {:margin "-8px"  ; Compensate for card margins 
-                              :width "100%"
-                              :display "flex"
-                              :flex-wrap "wrap"}}
-      [:button.btn.btn-default {:key :all-games
-                                :on-click #(swap! page-config assoc :time-frame :all-games)
-                                :style (merge
-                                        {:cursor "pointer"
-                                         :background-color (if (= (:time-frame @page-config) :all-games)
-                                                             "#d1e7dd" ; Highlight color for selected
-                                                             "white")})}
-       "All Games"]
-      [:button.btn.btn-default {:key :last-5-games
-                                :on-click #(swap! page-config assoc :time-frame :last-5-games)
-                                :style (merge
-                                        {:cursor "pointer"
-                                         :background-color (if (= (:time-frame @page-config) :last-5-games)
-                                                             "#d1e7dd" ; Highlight color for selected
-                                                             "white")})}
-       "Last 5 MNF Fixtures"]
-      [:button.btn.btn-default {:key :last-10-games
-                                :on-click #(swap! page-config assoc :time-frame :last-10-games)
-                                :style (merge
-                                        {:cursor "pointer"
-                                         :background-color (if (= (:time-frame @page-config) :last-10-games)
-                                                             "#d1e7dd" ; Highlight color for selected
-                                                             "white")})}
-       "Last 10 MNF Fixtures"]]
+      clean-player "'s Stats"] 
+     [utils/selector-button-group page-config [[:all-games "All Time"] 
+                                               [:season "2025 Season"]]] 
+     [utils/selector-button-group page-config [[:last-5-games "Last 5 MNF Fixtures"]
+                                               [:last-10-games "Last 10 MNF Fixtures"]]]
      (case (:time-frame @page-config)
        :all-games (utils/display-player-stats player)
        :last-5-games (utils/display-player-stats last-5-player)
        :last-10-games (utils/display-player-stats last-10-player)
+       :season (utils/display-player-stats player-2025-stats)
        nil [:p "Loading..."] ; Optional: handle loading state
        [:p "No data for selected time period"])]))

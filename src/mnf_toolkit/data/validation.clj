@@ -60,7 +60,6 @@
                               :bibs-count (count (:players team-bibs-data))})
                            invalid-matches)}))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn validate-all-data
   [match-data player-data]
   (let [bias-validation (validate-player-biases player-data)

@@ -26,7 +26,6 @@
                               :throw-exceptions true})]
     (= 200 (:status response))))
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn build-and-store-data!
   "Processes match and player data and stores results as EDN files"
   []
