@@ -679,4 +679,26 @@
                                 "Stace"
                                 "Gary"
                                 "Steve Rowland"
-                                "Dave Vann"}}}]
+                                "Dave Vann"}}}
+{:match-id 32
+ :date #inst "2025-07-28T00:00:00.000-00:00"
+ :team-bibs-data {:goals 7
+                  :shooting-at-railway 1
+                  :players #{"Chris"
+                             "Mark Burnage"
+                             "Catalin Dominte"
+                             "Mark Gray"
+                             "Tom Brooksbank"
+                             "Richard Brown"
+                             "Callum Watson"
+                             "Steven Lucas"}}
+ :team-colours-data {:goals 4
+                     :shooting-at-railway 0
+                     :players #{"Tom Searle"
+                                "Ian Daley"
+                                "Alex Gordon"
+                                "Gary"
+                                "Kadir"
+                                "Steve Rowland"
+                                "Stace"
+                                "Christian Halstead"}}}]
