@@ -169,5 +169,33 @@
  {:name "Neil B"
   :attacking-bias 0.4
   :defensive-bias 0.6
-  :manager-rating 0.6}]
+  :manager-rating 0.6}
+ {:name "Yas"
+  :attacking-bias 0.05
+  :defensive-bias 0.95
+  :manager-rating 0.5}
+ {:name "Sam Ireton"
+  :attacking-bias 0.6
+  :defensive-bias 0.4
+  :manager-rating 0.6}
+ {:name "Tim Konrad"
+  :attacking-bias 0.4
+  :defensive-bias 0.6
+  :manager-rating 0.5}
+ {:name "Dave H"
+  :attacking-bias 0.5
+  :defensive-bias 0.5
+  :manager-rating 0.5}
+ {:name "Joel Halstead"
+  :attacking-bias 0.6
+  :defensive-bias 0.4
+  :manager-rating 0.6}
+ {:name "Dan H"
+  :attacking-bias 0.1
+  :defensive-bias 0.9
+  :manager-rating 0.5}
+ {:name "David Hennessey"
+  :attacking-bias 0.6
+  :defensive-bias 0.4
+  :manager-rating 0.3}]
 

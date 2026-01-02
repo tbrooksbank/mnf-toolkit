@@ -7,7 +7,7 @@
         ;; Use dev/index.html for index, everything else from docs
         file (if (= uri "/index.html")
                (io/file "dev/index.html")
-               (io/file "docs" (subs uri 1)))]
+               (io/file "public" (subs uri 1)))]
     (if (.exists file)
       {:status 200
        :headers {"Content-Type" (cond
@@ -21,10 +21,21 @@
       {:status 404
        :body (str "Not found: " uri)})))
 
+(defonce server-instance (atom nil))
+
 (defn start-server []
-  (server/run-server handler {:port 3000}))
+  (when-not @server-instance
+    (let [stop-fn (server/run-server handler {:port 3000})]
+      (reset! server-instance stop-fn)
+      (println "Server started on localhost:3000"))))
+
+(defn stop-server []
+  (when @server-instance
+    (@server-instance)
+    (reset! server-instance nil)
+    (println "Server stopped")))
 
 (comment
-  (def stop-server (start-server))  ; Evaluate this to start
-  (stop-server)                     ; Evaluate this to stop
+  (start-server)   ; Start the server
+  (stop-server)    ; Stop the server
   )

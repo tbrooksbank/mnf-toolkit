@@ -3,8 +3,7 @@
    [mnf-toolkit.frontend.calcs :as calcs]
    [mnf-toolkit.frontend.pages.utils :as utils]
    [mnf-toolkit.frontend.states :as s] 
-   [reagent.core :as r]
-   [reagent.ratom :as reagent.ratom]))
+   [reagent.core :as r]))
 
 (defn calculate-team-stats[player-stats]
   (let [total-games (reduce + (map :total-games player-stats))
@@ -100,7 +99,8 @@
                                 "colours-player-text")}
                 player]]))]]]
 
-         [:div {:style {:display "flex" 
+         [:details [:summary "Detailed Stats"]
+          [:div {:style {:display "flex" 
                         :flex-wrap "wrap"
                         :justify-content "center"}} 
           [:div {:style {:display "flex"
@@ -134,5 +134,5 @@
            [utils/stat-card "Avg Goals For" (.toFixed (:avg-goals-for @team-2-stats) 4) :width "100%"]
            [utils/stat-card "Avg Goals Against" (.toFixed (:avg-goals-against @team-2-stats) 4) :width "100%"]
            [utils/stat-card "Bibs Ratio" (.toFixed (:bibs-ratio @team-2-stats) 4) :width "100%"]
-           [utils/stat-card "Railway End Ratio" (.toFixed (:shooting-at-railway-ratio @team-2-stats) 4) :width "100%"]]]
+           [utils/stat-card "Railway End Ratio" (.toFixed (:shooting-at-railway-ratio @team-2-stats) 4) :width "100%"]]]]
          ])})))

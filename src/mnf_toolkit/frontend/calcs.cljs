@@ -95,6 +95,22 @@
      :ga (:goals-against player)
      :gd goal-difference}))
 
+(defn calculate-league-stats-per-game
+  "Calculates points and goal difference for a single player's stats on a per game basis."
+  [player]
+  (let [points (+ (* 3 (:wins player)) (:draws player))
+        goal-difference (- (:goals-for player) (:goals-against player))
+        games (:total-games player)]
+    {:player (:player player)
+     :played (:total-games player)
+     :won (.toFixed (/ (:wins player) games) 2)
+     :drawn (.toFixed (/ (:draws player) games) 2)
+     :lost (.toFixed (/ (:losses player) games) 2)
+     :points (.toFixed (/ points games) 2)
+     :gf (.toFixed (/ (:goals-for player) games) 2)
+     :ga (.toFixed (/ (:goals-against player) games) 2)
+     :gd (.toFixed (/ goal-difference games) 2)}))
+
 (defn league-table*
   "Calculates points and goal difference for a single player's stats and adds position."
   [player-stats]
@@ -103,6 +119,18 @@
        (sort-by :gf >)
        (sort-by :gd >)
        (sort-by :points >)
+       (map-indexed (fn [index player]
+                      (assoc player :position (inc index))))))
+
+(defn league-table-per-game*
+  "Calculates points and goal difference for a single player's stats and adds position."
+  [player-stats]
+  (->> player-stats
+       (map calculate-league-stats-per-game)
+       (sort-by :gf >)
+       (sort-by :gd >)
+       (sort-by :points >)
+       (filter #(> (:played %) 10))
        (map-indexed (fn [index player]
                       (assoc player :position (inc index))))))
 
@@ -123,6 +151,24 @@
      (->> filtered-matches 
           calculate-player-stats
           league-table*))))
+
+(defn league-table-per-game
+  ([matches]
+   (->> matches
+        calculate-player-stats
+        league-table-per-game*))
+  ([matches opts]
+   (let [{:keys [from to]} opts
+         filtered-matches (filter (fn [{:keys [date]}]
+                                    (let [match-time (.getTime date)
+                                          from-time (if from (.getTime from) ##-Inf)
+                                          to-time (if to (.getTime to) ##Inf)]
+                                      (and (>= match-time from-time)
+                                           (<= match-time to-time))))
+                                  matches)]
+     (->> filtered-matches
+          calculate-player-stats
+          league-table-per-game*))))
 
 (defn add-ratio-stats
   "Adds ratio statistics to each player's stats map."

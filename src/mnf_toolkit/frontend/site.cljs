@@ -66,7 +66,8 @@
        "match" [p/match params]
        "player" [p/player params]
        "hall-of-fame" [p/hall-of-fame]
-       "team-builder" [p/team-builder] 
+       "team-builder" [p/team-builder]
+       "api-test" [p/api-test-page]
        [p/team-sheet])]))
 
 (defn app []

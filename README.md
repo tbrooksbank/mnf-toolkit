@@ -33,6 +33,12 @@ clj
 
 ## Local Testing
 
+### PHP Version
+
+```bash
+cd public && php -S localhost:8000
+```
+
 ### Development Build
 ```bash
 # Start shadow-cljs watch

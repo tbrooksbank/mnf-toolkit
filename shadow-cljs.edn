@@ -7,9 +7,15 @@
             :asset-path "/js"
             :modules {:main {:init-fn mnf-toolkit.frontend.site/innit!}}
             :compiler-options {:closure-defines {mnf-toolkit.frontend.site/BASE-PATH ""}}}
-  
+
   :app-prod {:target :browser
              :output-dir "docs/js"
              :asset-path "/js"
              :modules {:main {:init-fn mnf-toolkit.frontend.site/innit!}}
-             :compiler-options {:closure-defines {mnf-toolkit.frontend.site/BASE-PATH ""}}}}}
+             :compiler-options {:closure-defines {mnf-toolkit.frontend.site/BASE-PATH ""}}}
+
+  :app-local {:target :browser
+              :output-dir "public/js"
+              :asset-path "/js"
+              :modules {:main {:init-fn mnf-toolkit.frontend.site/innit!}}
+              :compiler-options {:closure-defines {mnf-toolkit.frontend.site/BASE-PATH ""}}}}}

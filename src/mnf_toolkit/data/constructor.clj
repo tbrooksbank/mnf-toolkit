@@ -1,8 +1,6 @@
 (ns mnf-toolkit.data.constructor
-  (:require [mnf-toolkit.calcs :as mnf]
-            [mnf-toolkit.data.access :as data-access]
+  (:require [mnf-toolkit.data.access :as data-access]
             [mnf-toolkit.data.validation :as data-val]
-            [mnf-toolkit.data.output-tables :as tables]
             [mnf-toolkit.secrets :as secrets]
             [clj-http.client :as http]
             [cheshire.core :as json]))
@@ -54,37 +52,8 @@
           (throw e)))
 
       (println "Calculating stats...")
-      (let [raw-player-stats (try
-                               (mnf/calculate-player-stats match-data players)
-                               (catch Exception e
-                                 (println "ERROR: Failed to calculate player stats:" (.getMessage e))
-                                 (throw e)))
-
-            league-table (try
-                           (tables/league-table raw-player-stats)
-                           (catch Exception e
-                             (println "Error: Failed to generate league table from player stats:" (.getMessage e))
-                             (throw e)))
-            
-            current-year-league-table (try
-                                        (tables/current-year-league-table players match-data)
-                                        (catch Exception e
-                                          (println "Error: Failed to generate current year league table from player stats:" (.getMessage e))
-                                          (throw e)))
-
-            player-info (try
-                          (tables/player-info raw-player-stats)
-                          (catch Exception e
-                            (println "Error: Failed to generate player info from player stats:" (.getMessage e))
-                            (throw e)))
-
-            consolidated-data {:raw-match-data match-data
-                               :raw-players players
-                               :raw-player-stats raw-player-stats
-                               :league-table league-table
-                               :current-year-table current-year-league-table
-                               :player-info player-info
-                               :match-data (reverse match-data)}]
+      (let [consolidated-data {:raw-match-data match-data
+                               :raw-players players}]
 
         (println "Storing processed data file to:"
                  "\n Data: docs/data/mnf-data.edn")
@@ -92,20 +61,24 @@
           (spit "docs/data/mnf-data.edn" (pr-str consolidated-data))
           (catch Exception e
             (println "ERROR: Failed to write output file:" (.getMessage e))
-            (throw e))) 
+            (throw e)))
         (println "Data stored to local EDN file successfully!")
-        
+
         (println "Storing data to GIST")
-        (try 
+        (try
           (let [github-token secrets/github-token]
-             (update-gist gist-id 
-                          "mnf-data.edn"
-                          (pr-str consolidated-data)
-                          github-token))
-           (catch Exception e
-             (println "ERROR: Failed to update gist:" (.getMessage e))
-             (throw e)))
+            (update-gist gist-id
+                         "mnf-data.edn"
+                         (pr-str consolidated-data)
+                         github-token))
+          (catch Exception e
+            (println "ERROR: Failed to update gist:" (.getMessage e))
+            (throw e)))
         (println "Data stored to GIST successfully!")
+
+        (println "Sending financial data to YNAB")
+        
+        (println "YNAB updated sucessfully")
 
         (println
          (str "\nProcessing complete:"

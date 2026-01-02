@@ -54,9 +54,7 @@
         data (if (= (:time-frame @hall-of-fame-config) :all-time)
                hof-all-time
                hof-2025)
-        message (if (= (:time-frame @hall-of-fame-config) :all-time)
-                  "All time hall of fame spots require a player to have played at least 10 games"
-                  "2025 hall of fame spots require a player to have played at least 5 games")]
+        message "Hall of fame spots require players to have participated in 50% +1 of matches in the selected time frame."]
     [:div.section
      [:h2 "Hall of Fame"]
      [utils/selector-button-group hall-of-fame-config [[:all-time "All Time"] [:2025 "2025"]]] 

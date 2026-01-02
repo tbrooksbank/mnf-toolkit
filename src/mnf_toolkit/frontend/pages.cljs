@@ -6,6 +6,7 @@
    [mnf-toolkit.frontend.pages.player-page :as pp]
    [mnf-toolkit.frontend.pages.hall-of-fame-page :as hof]
    [mnf-toolkit.frontend.pages.team-builder-page :as tb]
+   [mnf-toolkit.frontend.pages.api-test :as at]
    ; External Deps 
    [clojure.string]))
 
@@ -22,3 +23,5 @@
 (defn team-builder [] (tb/team-builder-page-builder))
 
 (defn hall-of-fame [] (hof/hall-of-fame-page-builder))
+
+(defn api-test-page [] (at/api-tester))
