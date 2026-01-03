@@ -7,6 +7,8 @@
    [mnf-toolkit.frontend.pages.hall-of-fame-page :as hof]
    [mnf-toolkit.frontend.pages.team-builder-page :as tb]
    [mnf-toolkit.frontend.pages.api-test :as at]
+   [mnf-toolkit.frontend.pages.input-result-page :as ir]
+   [mnf-toolkit.frontend.pages.login-page :as li]
    ; External Deps 
    [clojure.string]))
 
@@ -25,3 +27,7 @@
 (defn hall-of-fame [] (hof/hall-of-fame-page-builder))
 
 (defn api-test-page [] (at/api-tester))
+
+(defn input-result [] (ir/input-result-builder))
+
+(defn login [] (li/login-page-builder))

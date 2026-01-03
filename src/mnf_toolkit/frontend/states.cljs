@@ -1,8 +1,6 @@
 (ns mnf-toolkit.frontend.states
   (:require ; Internal Deps
    [mnf-toolkit.frontend.data-sourcing :as ds]
-   [mnf-toolkit.frontend.calcs :as calcs]
-            ; External Deps
    [cljs.reader :as reader]
    [reagent.core :as r]))
 
@@ -11,7 +9,9 @@
 
 (def app-state
   (r/atom {:active-tab "team-sheet"
-           :tab-params nil 
+           :tab-params nil
+           :admin-view false
+           :admin-token nil
            :raw-player-info nil
            :raw-match-data nil
            :last-5-games-date-bounds nil

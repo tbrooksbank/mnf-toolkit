@@ -38,7 +38,8 @@
    label]))
 
 (defn navigation []
-  (let [active-tab (:active-tab @s/app-state)
+  (let [admin-view? (:admin-view @s/app-state)
+        active-tab (:active-tab @s/app-state)
         menu-open? (:menu-open? @s/nav-state)]
     [:nav.navbar
      [:div.nav-brand
@@ -47,13 +48,19 @@
        [:span.hamburger-box
         [:span.hamburger-inner]]]]
      [:div.nav-menu {:class (when menu-open? "is-open")}
-      [:div.nav-left
-       [nav-link "team-sheet" "Team Sheet" active-tab]
-       [nav-link "league-table" "League Tables" active-tab] 
-       [nav-link "match-results" "Match Results" active-tab]
-       [nav-link "hall-of-fame" "Hall of Fame" active-tab]
-       ;[nav-link "team-builder" "Team Builder" active-tab]
-       ]]]))
+      (if admin-view?
+        [:div.nav-left
+         [nav-link "team-sheet" "Team Sheet" active-tab]
+         [nav-link "league-table" "League Tables" active-tab]
+         [nav-link "match-results" "Match Results" active-tab]
+         [nav-link "hall-of-fame" "Hall of Fame" active-tab]
+         [nav-link "result-input" "Input Result" active-tab]]
+        [:div.nav-left
+         [nav-link "team-sheet" "Team Sheet" active-tab]
+         [nav-link "league-table" "League Tables" active-tab] 
+         [nav-link "match-results" "Match Results" active-tab]
+         [nav-link "hall-of-fame" "Hall of Fame" active-tab]])
+      ]]))
 
 (defn main-content []
   (let [active-tab (:active-tab @s/app-state)
@@ -66,6 +73,8 @@
        "match" [p/match params]
        "player" [p/player params]
        "hall-of-fame" [p/hall-of-fame]
+       "result-input" [p/input-result]
+       "login" [p/login]
        "team-builder" [p/team-builder]
        "api-test" [p/api-test-page]
        [p/team-sheet])]))
@@ -80,7 +89,10 @@
          :rel "noopener noreferrer"}
      "Source Code"]
     [:span " | "]
-    [:span "Tom Brooksbank © 2025"]]])
+    [:span "Tom Brooksbank © 2025"]
+    [:span " | "]
+    [:a {:href "#/login"} 
+     "Admin"]]])
 
 ;; Initialize app
 (defn init! []

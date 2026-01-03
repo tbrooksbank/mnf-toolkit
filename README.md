@@ -1,13 +1,30 @@
 # MNF Toolkit
 
-A toolkit for tracking stats, managing squad rotations, and visualizing performance metrics for Maidenhead Monday Night Football.
+A website for Maidenhead Monday Night Football.
 
 ## Features
 - Match history tracking
-- Player performance analytics
-- Team balancing suggestions
-- League table statistics
+- Player/ League statistics
 
+# Current Methods
+## Testing
+
+```bash
+npx shadow-cljs watch app-local
+```
+
+```bash
+cd public && php -S localhost:8000
+```
+
+## Release
+```bash
+npx shadow-cljs release app-prod
+```
+
+Then copy the contents of the public folder to hosting platform
+
+# Old Methods (pre server storage)
 ## Updating Match Data
 
 1. Add new match data to [`resources/match_data.edn`](resources/match_data.edn):
@@ -32,12 +49,6 @@ clj
 ```
 
 ## Local Testing
-
-### PHP Version
-
-```bash
-cd public && php -S localhost:8000
-```
 
 ### Development Build
 ```bash
