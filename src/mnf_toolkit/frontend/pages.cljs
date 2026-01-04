@@ -5,7 +5,6 @@
    [mnf-toolkit.frontend.pages.match-results-page :as mr]
    [mnf-toolkit.frontend.pages.player-page :as pp]
    [mnf-toolkit.frontend.pages.hall-of-fame-page :as hof]
-   [mnf-toolkit.frontend.pages.team-builder-page :as tb]
    [mnf-toolkit.frontend.pages.api-test :as at]
    [mnf-toolkit.frontend.pages.input-result-page :as ir]
    [mnf-toolkit.frontend.pages.login-page :as li]
@@ -22,12 +21,10 @@
 
 (defn player [player-id] (pp/player-page-builder player-id))
 
-(defn team-builder [] (tb/team-builder-page-builder))
-
 (defn hall-of-fame [] (hof/hall-of-fame-page-builder))
 
 (defn api-test-page [] (at/api-tester))
 
-(defn input-result [] (ir/input-result-builder))
+(defn input-result [] (ir/match-results-input-page))
 
 (defn login [] (li/login-page-builder))

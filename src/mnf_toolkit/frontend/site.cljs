@@ -54,7 +54,8 @@
          [nav-link "league-table" "League Tables" active-tab]
          [nav-link "match-results" "Match Results" active-tab]
          [nav-link "hall-of-fame" "Hall of Fame" active-tab]
-         [nav-link "result-input" "Input Result" active-tab]]
+         [nav-link "result-input" "Input Result" active-tab]
+         [nav-link "player-input" "Player Register" active-tab]]
         [:div.nav-left
          [nav-link "team-sheet" "Team Sheet" active-tab]
          [nav-link "league-table" "League Tables" active-tab] 
@@ -75,7 +76,6 @@
        "hall-of-fame" [p/hall-of-fame]
        "result-input" [p/input-result]
        "login" [p/login]
-       "team-builder" [p/team-builder]
        "api-test" [p/api-test-page]
        [p/team-sheet])]))
 
